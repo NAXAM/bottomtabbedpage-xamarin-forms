@@ -16,14 +16,10 @@
  */
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 
 using BottomBar.XamarinForms;
-using BottomNavigationBar;
-using BottomNavigationBar.Listeners;
 
 using Android.Views;
 using Android.Widget;
@@ -32,19 +28,24 @@ using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
 using BottomBar.Droid.Renderers;
 using BottomBar.Droid.Utils;
+using Android.Support.Design.Widget;
+using Android.Support.Design.Internal;
+using Android.Support.V7.View.Menu;
 
-[assembly: ExportRenderer (typeof (BottomBarPage), typeof (BottomBarPageRenderer))]
+[assembly: ExportRenderer(typeof(BottomBarPage), typeof(BottomBarPageRenderer))]
 
 namespace BottomBar.Droid.Renderers
 {
-	public class BottomBarPageRenderer : VisualElementRenderer<BottomBarPage>, IOnTabClickListener
+    public class BottomBarPageRenderer : VisualElementRenderer<BottomBarPage>, BottomNavigationView.IOnNavigationItemSelectedListener
 	{
 		bool _disposed;
-		BottomNavigationBar.BottomBar _bottomBar;
-		FrameLayout _frameLayout;
+		BottomNavigationView _bottomBar;
+        BottomNavigationMenu _menu;
+        FrameLayout _frameLayout;
 		IPageController _pageController;
+        private LinearLayout _rootLayout;
 
-		public BottomBarPageRenderer ()
+        public BottomBarPageRenderer ()
 		{
 			AutoPackage = false;
 		}
@@ -56,7 +57,6 @@ namespace BottomBar.Droid.Renderers
 			SwitchContent(Element.Children [position]);
 			var bottomBarPage = Element as BottomBarPage;
 			bottomBarPage.CurrentPage = Element.Children[position];
-			//bottomBarPage.RaiseCurrentPageChanged();
 		}
 
 		public void OnTabReSelected (int position)
@@ -78,13 +78,12 @@ namespace BottomBar.Droid.Renderers
 						pageRenderer.ViewGroup.RemoveFromParent ();
 						pageRenderer.Dispose ();
 					}
-
-					// pageToRemove.ClearValue (Platform.RendererProperty);
 				}
 
-				if (_bottomBar != null) {
-					_bottomBar.SetOnTabClickListener (null);
-					_bottomBar.Dispose ();
+				if (_bottomBar != null)
+                {
+                    _bottomBar.SetOnNavigationItemSelectedListener(null);
+                    _bottomBar.Dispose ();
 					_bottomBar = null;
 				}
 
@@ -92,10 +91,6 @@ namespace BottomBar.Droid.Renderers
 					_frameLayout.Dispose ();
 					_frameLayout = null;
 				}
-
-				/*if (Element != null) {
-					PageController.InternalChildren.CollectionChanged -= OnChildrenCollectionChanged;
-				}*/
 			}
 
 			base.Dispose (disposing);
@@ -125,38 +120,33 @@ namespace BottomBar.Droid.Renderers
 				if (_bottomBar == null) {
 					_pageController = PageController.Create (bottomBarPage);
 
-					// create a view which will act as container for Page's
-					_frameLayout = new FrameLayout (Forms.Context);
-					_frameLayout.LayoutParameters = new FrameLayout.LayoutParams (LayoutParams.MatchParent, LayoutParams.MatchParent, GravityFlags.Fill);
-					AddView (_frameLayout, 0);
+                    _rootLayout = (LinearLayout) LayoutInflater.FromContext(Forms.Context)
+                                                .Inflate(Resource.Layout.bottom_nav, ViewGroup, false);
+                    AddView(_rootLayout);
 
-					// create bottomBar control
-					_bottomBar = BottomNavigationBar.BottomBar.Attach (_frameLayout, null);
-					_bottomBar.NoTabletGoodness ();
-					if (bottomBarPage.FixedMode)
-					{
-						_bottomBar.UseFixedMode();
-					}
+                    // create a view which will act as container for Page's
+                    _frameLayout = _rootLayout.FindViewById<FrameLayout>(Resource.Id.pageContainer);
+                    _bottomBar = _rootLayout.FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
+                    _bottomBar.SetOnNavigationItemSelectedListener(this);
+                    _bottomBar.SetBackgroundColor(new Android.Graphics.Color(23, 31, 50));
+                    _bottomBar.Animation = null;
+                    _bottomBar.StateListAnimator = null;
+                    
+                    var stateList = new Android.Content.Res.ColorStateList(
+                        new int[][] {
+                            new int[] { Android.Resource.Attribute.StateChecked },
+                            new int[] { Android.Resource.Attribute.StateEnabled }
+                        },
+                        new int[] {
+                            new Android.Graphics.Color(67, 163, 245),
+                            new Android.Graphics.Color(187, 188, 190)
+                        });
+                    _bottomBar.ItemIconTintList = stateList;
+                    _bottomBar.ItemTextColor = stateList;
 
-					switch (bottomBarPage.BarTheme)
-					{
-						case BottomBarPage.BarThemeTypes.Light:
-							break;
-						case BottomBarPage.BarThemeTypes.DarkWithAlpha:
-							_bottomBar.UseDarkThemeWithAlpha(true);
-							break;
-						case BottomBarPage.BarThemeTypes.DarkWithoutAlpha:
-							_bottomBar.UseDarkThemeWithAlpha(false);
-							break;
-						default:
-							throw new ArgumentOutOfRangeException();
-					}
-					_bottomBar.LayoutParameters = new LayoutParams (LayoutParams.MatchParent, LayoutParams.MatchParent);
-					_bottomBar.SetOnTabClickListener (this);
+                    _menu = (BottomNavigationMenu) _bottomBar.Menu;
 
-					UpdateTabs ();
-					UpdateBarBackgroundColor ();
-					UpdateBarTextColor ();
+                    UpdateTabs();
 				}
 
 				if (bottomBarPage.CurrentPage != null) {
@@ -171,84 +161,50 @@ namespace BottomBar.Droid.Renderers
 
 			if (e.PropertyName == nameof (TabbedPage.CurrentPage)) {
 				SwitchContent (Element.CurrentPage);
-			} else if (e.PropertyName == NavigationPage.BarBackgroundColorProperty.PropertyName) {
-				UpdateBarBackgroundColor ();
-			} else if (e.PropertyName == NavigationPage.BarTextColorProperty.PropertyName) {
-				UpdateBarTextColor ();
 			}
 		}
 
 		protected virtual void SwitchContent (Page view)
 		{
-			Context.HideKeyboard (this);
+            Context.HideKeyboard(this);
 
-			_frameLayout.RemoveAllViews ();
+            _frameLayout.RemoveAllViews();
 
-			if (view == null) {
-				return;
-			}
+            if (view == null)
+            {
+                return;
+            }
 
-			if (Platform.GetRenderer (view) == null) {
-				Platform.SetRenderer (view, Platform.CreateRenderer (view));
-			}
+            if (Platform.GetRenderer(view) == null)
+            {
+                Platform.SetRenderer(view, Platform.CreateRenderer(view));
+            }
 
-			_frameLayout.AddView (Platform.GetRenderer (view).ViewGroup);
-		}
+            _frameLayout.AddView(Platform.GetRenderer(view).ViewGroup);
+        }
 
 		protected override void OnLayout (bool changed, int l, int t, int r, int b)
 		{
 			int width = r - l;
 			int height = b - t;
 
-			var context = Context;
-
-			_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (height, MeasureSpecMode.AtMost));
-			int tabsHeight = Math.Min (height, Math.Max (_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
-
 			if (width > 0 && height > 0) {
-				_pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.Height));
-				ObservableCollection<Element> internalChildren = _pageController.InternalChildren;
+                var context = Context;
+                _rootLayout.Measure(MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.AtMost), MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
+                _rootLayout.Layout(0, 0, _rootLayout.MeasuredWidth, _rootLayout.MeasuredHeight);
 
-				for (var i = 0; i < internalChildren.Count; i++) {
-					var child = internalChildren [i] as VisualElement;
+                _bottomBar.Measure(MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
+                int tabsHeight = (int) Context.ToPixels(59);//  Math.Min(height, Math.Max(_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
 
-					if (child == null) {
-						continue;
-					}
-
-					IVisualElementRenderer renderer = Platform.GetRenderer (child);
-					var navigationRenderer = renderer as NavigationPageRenderer;
-					if (navigationRenderer != null) {
-						// navigationRenderer.ContainerPadding = tabsHeight;
-					}
-				}
-
-				_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (tabsHeight, MeasureSpecMode.Exactly));
-				_bottomBar.Layout (0, 0, width, tabsHeight);
+                _frameLayout.Layout(0, 0, width, height - tabsHeight);
+                
+                _pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.Height));
+				_bottomBar.Layout (0, height- tabsHeight, width, height);
 			}
 
 			base.OnLayout (changed, l, t, r, b);
 		}
-
-		void UpdateBarBackgroundColor ()
-		{
-			if (_disposed || _bottomBar == null) {
-				return;
-			}
-
-			_bottomBar.SetBackgroundColor (Element.BarBackgroundColor.ToAndroid ());
-		}
-
-		void UpdateBarTextColor ()
-		{
-			if (_disposed || _bottomBar == null) {
-				return;
-			}
-
-			_bottomBar.SetActiveTabColor(Element.BarTextColor.ToAndroid());
-			// The problem SetActiveTabColor does only work in fiexed mode // haven't found yet how to set text color for tab items on_bottomBar, doesn't seem to have a direct way
-		}
-
+        
 		void UpdateTabs ()
 		{
 			// create tab items
@@ -260,26 +216,47 @@ namespace BottomBar.Droid.Renderers
 
 		void SetTabItems ()
 		{
-			BottomBarTab [] tabs = Element.Children.Select (page => {
-				var tabIconId = ResourceManagerEx.IdFromTitle (page.Icon, ResourceManager.DrawableClass);
-				return new BottomBarTab (tabIconId, page.Title);
-			}).ToArray ();
+            //BottomBarTab [] tabs = Element.Children.Select (page => {
+            //	var tabIconId = ResourceManagerEx.IdFromTitle (page.Icon, ResourceManager.DrawableClass);
+            //	return new BottomBarTab (tabIconId, page.Title);
+            //}).ToArray ();
 
-			_bottomBar.SetItems (tabs);
-		}
+            //_bottomBar.SetItems (tabs);
+            var tabsCount = Math.Min(Element.Children.Count, _bottomBar.MaxItemCount);
+            for (int i = 0; i < tabsCount; i++)
+            {
+                var page = Element.Children[i];
+                var menuItem = _menu.Add(0, i, 0, page.Title);
+                var tabIconId = ResourceManagerEx.IdFromTitle(page.Icon, ResourceManager.DrawableClass);
+                menuItem.SetIcon(tabIconId);
+            }
+        }
 
-		void SetTabColors ()
+
+        void SetTabColors ()
 		{
-			for (int i = 0; i < Element.Children.Count; ++i) {
-				Page page = Element.Children [i];
+			//for (int i = 0; i < Element.Children.Count; ++i) {
+			//	Page page = Element.Children [i];
 
-				Color? tabColor = page.GetTabColor ();
+			//	Color? tabColor = page.GetTabColor ();
 
-				if (tabColor != null) {
-					_bottomBar.MapColorForTab (i, tabColor.Value.ToAndroid ());
-				}
-			}
+			//	if (tabColor != null) {
+			//		_bottomBar.MapColorForTab (i, tabColor.Value.ToAndroid ());
+			//	}
+			//}
 		}
-	}
+
+        public bool OnNavigationItemSelected(IMenuItem item)
+        {
+            var menu = (BottomNavigationMenu) _bottomBar.Menu;
+            var index = menu.FindItemIndex(item.ItemId);
+
+            var pageIndex = index % Element.Children.Count;
+
+            OnTabSelected(pageIndex);
+
+            return true;
+        }
+    }
 }
 

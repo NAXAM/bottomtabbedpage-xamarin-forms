@@ -43,9 +43,6 @@
     <AndroidSupportedAbis>armeabi-v7a;x86;armeabi;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BottomNavigationBar, Version=1.4.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BottomNavigationBar.1.4.0.3\lib\MonoAndroid403\BottomNavigationBar.dll</HintPath>
-    </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.4.231\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
@@ -118,13 +115,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BottomBar.Droid\BottomBar.Droid.csproj">
+      <Project>{96746a3e-074d-40c6-b2e2-ca90313012c6}</Project>
+      <Name>BottomBar.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BottomBarXFExample\BottomBarXFExample.csproj">
       <Project>{821A7B88-A9CD-4CCA-B32B-CEE8DCF49738}</Project>
       <Name>BottomBarXFExample</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BottomBar.Droid\BottomBar.Droid.csproj">
-      <Project>{96746A3E-074D-40C6-B2E2-CA90313012C6}</Project>
-      <Name>BottomBar.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BottomBar.XamarinForms\BottomBar.XamarinForms.csproj">
       <Project>{BB1D801D-5EC3-471D-B9EA-98C48D785BAA}</Project>
