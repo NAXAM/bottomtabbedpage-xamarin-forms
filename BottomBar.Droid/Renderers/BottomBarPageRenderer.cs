@@ -117,20 +117,29 @@ namespace BottomBar.Droid.Renderers
 
 				BottomBarPage bottomBarPage = e.NewElement;
 
-				if (_bottomBar == null) {
-					_pageController = PageController.Create (bottomBarPage);
+                if (_bottomBar == null) {
+                    _pageController = PageController.Create(bottomBarPage);
 
-                    _rootLayout = (LinearLayout) LayoutInflater.FromContext(Forms.Context)
-                                                .Inflate(Resource.Layout.bottom_nav, ViewGroup, false);
+                    _rootLayout = new LinearLayout(Context) {
+                        LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent)
+                    };
                     AddView(_rootLayout);
 
                     // create a view which will act as container for Page's
-                    _frameLayout = _rootLayout.FindViewById<FrameLayout>(Resource.Id.pageContainer);
-                    _bottomBar = _rootLayout.FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
+                    _frameLayout = new FrameLayout(Context)
+                    {
+                        LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent)
+                    };
+                    _rootLayout.AddView(_frameLayout);
+
+                    _bottomBar = new BottomNavigationView(Context)
+                    {
+                        LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent)
+                    };
+                    _rootLayout.AddView(_bottomBar);
+
                     _bottomBar.SetOnNavigationItemSelectedListener(this);
                     _bottomBar.SetBackgroundColor(new Android.Graphics.Color(23, 31, 50));
-                    _bottomBar.Animation = null;
-                    _bottomBar.StateListAnimator = null;
                     
                     var stateList = new Android.Content.Res.ColorStateList(
                         new int[][] {
@@ -138,8 +147,8 @@ namespace BottomBar.Droid.Renderers
                             new int[] { Android.Resource.Attribute.StateEnabled }
                         },
                         new int[] {
-                            new Android.Graphics.Color(67, 163, 245),
-                            new Android.Graphics.Color(187, 188, 190)
+                            new Android.Graphics.Color(67, 163, 245), //Selected
+                            new Android.Graphics.Color(187, 188, 190) //Normal
                         });
                     _bottomBar.ItemIconTintList = stateList;
                     _bottomBar.ItemTextColor = stateList;
