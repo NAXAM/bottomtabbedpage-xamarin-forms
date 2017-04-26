@@ -20,6 +20,7 @@ using Naxam.BottomNavs.Platform.Droid;
 using Naxam.BottomNavs.Platform.Droid.Utils;
 using Naxam.BottomNavs.Forms;
 using Android.Content.Res;
+using Android.Support.V7.View.Menu;
 
 [assembly: ExportRenderer(typeof(BottomTabbedPage), typeof(BottomTabbedRenderer))]
 namespace Naxam.BottomNavs.Platform.Droid
@@ -235,7 +236,7 @@ namespace Naxam.BottomNavs.Platform.Droid
                 _rootLayout.Layout(0, 0, _rootLayout.MeasuredWidth, _rootLayout.MeasuredHeight);
 
                 _bottomBar.Measure(MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
-                int tabsHeight = BottomBarHeight.HasValue ? (BottomBarHeight.Value) : Math.Min(height, Math.Max(_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
+                int tabsHeight = BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : Math.Min(height, Math.Max(_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
 
                 _frameLayout.Layout(0, 0, width, height - tabsHeight);
 
@@ -243,6 +244,9 @@ namespace Naxam.BottomNavs.Platform.Droid
 
                 _bottomBar.Layout(0, height - tabsHeight, width, height);
             }
+
+
+            
 
             base.OnLayout(changed, l, t, r, b);
         }
