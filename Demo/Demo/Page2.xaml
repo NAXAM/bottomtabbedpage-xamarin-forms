@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Page2"
+    Icon="drug_drugshop.png"
+    BackgroundColor="#0b0c4f"
+    x:Class="Demo.Page2">
+    <StackLayout>
+        <Label
+            Text="Page2"
+            Style="{StaticResource LabelStyle}" />
+    </StackLayout>
+</ContentPage>
