@@ -47,11 +47,6 @@ namespace Naxam.BottomNavs.Platform.Droid
         private LinearLayout _rootLayout;
 
 
-
-
-
-
-
         public BottomTabbedRenderer()
         {
             AutoPackage = false;
@@ -86,9 +81,7 @@ namespace Naxam.BottomNavs.Platform.Droid
             if (disposing && !_disposed)
             {
                 _disposed = true;
-
                 RemoveAllViews();
-
                 foreach (Page pageToRemove in Element.Children)
                 {
                     IVisualElementRenderer pageRenderer = Platform.GetRenderer(pageToRemove);
@@ -113,7 +106,6 @@ namespace Naxam.BottomNavs.Platform.Droid
                     _frameLayout = null;
                 }
             }
-
             base.Dispose(disposing);
         }
 
@@ -128,7 +120,6 @@ namespace Naxam.BottomNavs.Platform.Droid
             base.OnDetachedFromWindow();
             _pageController.SendDisappearing();
         }
-
 
         protected override void OnElementChanged(ElementChangedEventArgs<BottomTabbedPage> e)
         {
@@ -169,8 +160,6 @@ namespace Naxam.BottomNavs.Platform.Droid
                         _bottomBar.SetBackgroundColor(BackgroundColor.Value);
                     }
 
-
-
                     if (ItemIconTintList != null)
                     {
                         _bottomBar.ItemIconTintList = ItemIconTintList;
@@ -206,12 +195,9 @@ namespace Naxam.BottomNavs.Platform.Droid
             }
         }
 
-
-
         protected virtual void SwitchContent(Page view)
         {
             Context.HideKeyboard(this);
-
             _frameLayout.RemoveAllViews();
 
             if (view == null)
@@ -223,7 +209,6 @@ namespace Naxam.BottomNavs.Platform.Droid
             {
                 Platform.SetRenderer(view, Platform.CreateRenderer(view));
             }
-
             _frameLayout.AddView(Platform.GetRenderer(view).ViewGroup);
         }
 
@@ -243,8 +228,6 @@ namespace Naxam.BottomNavs.Platform.Droid
                 _pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.Height));
                 _bottomBar.Layout(0, height - tabsHeight, width, height);
             }
-
-
 
             var item = (ViewGroup)_bottomBar.GetChildAt(0);
             item.Measure(width, tabsHeight);
@@ -286,10 +269,6 @@ namespace Naxam.BottomNavs.Platform.Droid
                         }
                     }
                 }
-
-
-
-
             }
 
             base.OnLayout(changed, l, t, r, b);
@@ -301,9 +280,7 @@ namespace Naxam.BottomNavs.Platform.Droid
         {
             // create tab items
             SetTabItems();
-
-            // set tab colors
-            SetTabColors();
+             
         }
 
         void SetTabItems()
@@ -339,24 +316,7 @@ namespace Naxam.BottomNavs.Platform.Droid
                     _bottomBar.SetTextSize(FontSize.Value);
                 _bottomBar.TextAlignment = Android.Views.TextAlignment.Center;
 
-
-
-
             }
-        }
-
-
-        void SetTabColors()
-        {
-            //for (int i = 0; i < Element.Children.Count; ++i) {
-            //	Page page = Element.Children [i];
-
-            //	Color? tabColor = page.GetTabColor ();
-
-            //	if (tabColor != null) {
-            //		_bottomBar.MapColorForTab (i, tabColor.Value.ToAndroid ());
-            //	}
-            //}
         }
     }
 }

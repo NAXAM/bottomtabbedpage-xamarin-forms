@@ -1,30 +1,57 @@
-# BottomNavigationBarXF
+# Overview
 
-A Bottom Navigation Bar implementation for Xamarin Forms. 
-It's using the [Bottom Navigation Bar](https://github.com/pocheshire/BottomNavigationBar) project to render the Navigation Bar on Android. It will render a standard TabbedPage on iOS.
+BottomNavigationView is a new control since Android Support Design v25.
+This source code demonstrate the way to bring it into Xamarin.Forms.
 
-# NuGet
+However, BottomNavigationView is very limited from customizing, we have to employ library BottomNavigationViewEx as a patch.
 
-Find it [here](https://www.nuget.org/packages/ThriveGmbH.BottomNavigationBar.XF/).
+In this code, we have
+- A custom BottomTabbedPage
+- A custom BottomTabbedRenderer
 
-## License
+We could 
+- change color of background, text of the bar, each item
+- chagne the height of the bar
+- change text typeface
 
-The MIT License (MIT)
+# Depedendencies
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+- BottomNavigationViewEx [nuget](https://www.nuget.org/packages/Naxam.Ittianyu.BottomNavExtension/)
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## How to use
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### Add XML namespace in your XAML
+```
+xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
+```
+
+### Change the root element to BottomTabbedPage (change the code behind as well)
+```
+<naxam:BottomTabbedPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Demo"
+    xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
+    x:Class="Demo.MainPage">
+    <local:Page1 />
+    <local:Page2 />
+    <local:Page3 />
+    <local:Page4 />
+    <local:Page5 />
+</naxam:BottomTabbedPage>
+```
+
+### Change the colors/heights in your activity class
+```
+BottomTabbedRenderer.BackgroundColor = new Android.Graphics.Color(23, 31, 50);
+BottomTabbedRenderer.FontSize = 10;
+BottomTabbedRenderer.IconSize = 20;
+BottomTabbedRenderer.ItemTextColor = stateList;
+BottomTabbedRenderer.ItemIconTintList = stateList;
+BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "HiraginoKakugoProNW3.otf");
+BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
+```
+
+## Source Code
+- Naxam.BottomNavs.Platform.Droid/*.cs
+- Naxam.BottomNavs.Forms/BottomTabbedPage.cs

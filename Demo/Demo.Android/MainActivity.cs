@@ -18,11 +18,6 @@ namespace Demo.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            BottomTabbedRenderer.BackgroundColor = new Android.Graphics.Color(23, 31, 50);
-            BottomTabbedRenderer.FontSize = 10;
-            BottomTabbedRenderer.IconSize = 20;
-            BottomTabbedRenderer.ItemPadding = 2;
-            BottomTabbedRenderer.BottomBarHeight = 60;
 
             var stateList = new Android.Content.Res.ColorStateList(
                 new int[][] {
@@ -34,10 +29,15 @@ namespace Demo.Droid
                     new Android.Graphics.Color(187, 188, 190) //Normal
                 });
 
+            BottomTabbedRenderer.BackgroundColor = new Android.Graphics.Color(23, 31, 50);
+            BottomTabbedRenderer.FontSize = 10;
+            BottomTabbedRenderer.IconSize = 20;
             BottomTabbedRenderer.ItemTextColor = stateList;
             BottomTabbedRenderer.ItemIconTintList = stateList;
             BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "HiraginoKakugoProNW3.otf");
             BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
+            BottomTabbedRenderer.ItemPadding = 4;
+            BottomTabbedRenderer.BottomBarHeight = 60;
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
