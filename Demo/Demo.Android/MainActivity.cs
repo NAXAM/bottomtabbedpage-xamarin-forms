@@ -21,7 +21,8 @@ namespace Demo.Droid
             BottomTabbedRenderer.BackgroundColor = new Android.Graphics.Color(23, 31, 50);
             BottomTabbedRenderer.FontSize = 10;
             BottomTabbedRenderer.IconSize = 20;
-
+            BottomTabbedRenderer.ItemPadding = 2;
+            BottomTabbedRenderer.BottomBarHeight = 60;
 
             var stateList = new Android.Content.Res.ColorStateList(
                 new int[][] {

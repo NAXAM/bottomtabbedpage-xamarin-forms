@@ -20,7 +20,6 @@ using Naxam.BottomNavs.Platform.Droid;
 using Naxam.BottomNavs.Platform.Droid.Utils;
 using Naxam.BottomNavs.Forms;
 using Android.Content.Res;
-using Android.Support.V7.View.Menu;
 
 [assembly: ExportRenderer(typeof(BottomTabbedPage), typeof(BottomTabbedRenderer))]
 namespace Naxam.BottomNavs.Platform.Droid
@@ -38,19 +37,7 @@ namespace Naxam.BottomNavs.Platform.Droid
         public static Typeface Typeface;
         public static int? IconSize;
         public static int? FontSize;
-
-        public bool OnNavigationItemSelected(IMenuItem item)
-        {
-            var menu = (BottomNavigationMenu)_bottomBar.Menu;
-            var index = menu.FindItemIndex(item.ItemId);
-
-            var pageIndex = index % Element.Children.Count;
-
-            OnTabSelected(pageIndex);
-
-            return true;
-        }
-
+        public static int? ItemPadding;
 
         bool _disposed;
         BottomNavigationViewEx _bottomBar;
@@ -59,13 +46,29 @@ namespace Naxam.BottomNavs.Platform.Droid
         Utils.IPageController _pageController;
         private LinearLayout _rootLayout;
 
+
+
+
+
+
+
         public BottomTabbedRenderer()
         {
             AutoPackage = false;
-
+            ItemPadding = ItemPadding ?? 0;
         }
 
         #region IOnTabClickListener
+
+        public bool OnNavigationItemSelected(IMenuItem item)
+        {
+            var menu = (BottomNavigationMenu)_bottomBar.Menu;
+            var index = menu.FindItemIndex(item.ItemId);
+            var pageIndex = index % Element.Children.Count;
+            OnTabSelected(pageIndex);
+            return true;
+        }
+
         public void OnTabSelected(int position)
         {
             //Do we need this call? It's also done in OnElementPropertyChanged
@@ -228,28 +231,71 @@ namespace Naxam.BottomNavs.Platform.Droid
         {
             int width = r - l;
             int height = b - t;
-
+            int tabsHeight = 0;
             if (width > 0 && height > 0)
             {
                 var context = Context;
                 _rootLayout.Measure(MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.AtMost), MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
                 _rootLayout.Layout(0, 0, _rootLayout.MeasuredWidth, _rootLayout.MeasuredHeight);
-
                 _bottomBar.Measure(MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
-                int tabsHeight = BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : Math.Min(height, Math.Max(_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
-
+                tabsHeight = BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : Math.Min(height, Math.Max(_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
                 _frameLayout.Layout(0, 0, width, height - tabsHeight);
-
                 _pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.Height));
-
                 _bottomBar.Layout(0, height - tabsHeight, width, height);
             }
 
 
-            
+
+            var item = (ViewGroup)_bottomBar.GetChildAt(0);
+            item.Measure(width, tabsHeight);
+            item.Layout(0, 0, width, tabsHeight);
+            int item_w = width / item.ChildCount;
+            for (int i = 0; i < item.ChildCount; i++)
+            {
+                var frame = (FrameLayout)item.GetChildAt(i);
+                var imgView = _bottomBar.GetIconAt(i);
+                var baselayout = frame.GetChildAt(1);
+                if (baselayout != null)
+                {
+                    if (baselayout.GetType() == typeof(BaselineLayout))
+                    {
+                        var basel = (BaselineLayout)baselayout;
+                        var small = _bottomBar.GetSmallLabelAt(i);
+                        var large = _bottomBar.GetLargeLabelAt(i);
+                        int baselH = Math.Max(small.Height, large.Height);
+                        int baselW = Math.Min(small.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
+
+                        int imgH = imgView.LayoutParameters.Height;
+                        int imgW = Math.Min(imgView.LayoutParameters.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
+                        int imgTop = (tabsHeight - imgH - baselH) / 2;
+                        int imgLeft = (item_w - imgW) / 2;
+                        int topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemPadding.Value);
+                        int leftBaseLine = (item_w - baselW) / 2;
+
+                        imgView.Measure(MeasureSpecFactory.MakeMeasureSpec(imgW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(imgH, MeasureSpecMode.AtMost));
+                        imgView.Layout(imgLeft, imgTop, imgW + imgLeft, imgH + imgTop);
+                        basel.Measure(MeasureSpecFactory.MakeMeasureSpec(baselW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.AtMost));
+                        basel.Layout(leftBaseLine, topBaseLine, leftBaseLine + baselW, topBaseLine + baselH);
+
+                        var breaktext = small.Paint.BreakText(small.Text, true, item_w - (int)Context.ToPixels(ItemPadding.Value), null);
+                        var text = small.Text;
+                        if (text.Length > breaktext)
+                        {
+                            small.Text = text.Substring(0, breaktext - 1);
+                            large.Text = text.Substring(0, breaktext - 1);
+                        }
+                    }
+                }
+
+
+
+
+            }
 
             base.OnLayout(changed, l, t, r, b);
         }
+
+
 
         void UpdateTabs()
         {
@@ -292,6 +338,9 @@ namespace Naxam.BottomNavs.Platform.Droid
                 if (FontSize.HasValue)
                     _bottomBar.SetTextSize(FontSize.Value);
                 _bottomBar.TextAlignment = Android.Views.TextAlignment.Center;
+
+
+
 
             }
         }
