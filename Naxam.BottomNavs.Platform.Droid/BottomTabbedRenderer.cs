@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Forms.Platform.Android;
@@ -25,7 +18,6 @@ using Android.Content.Res;
 namespace Naxam.BottomNavs.Platform.Droid
 {
     using Platform = Xamarin.Forms.Platform.Android.Platform;
-    using Forms = Xamarin.Forms.Forms;
 
     public class BottomTabbedRenderer : VisualElementRenderer<BottomTabbedPage>, BottomNavigationView.IOnNavigationItemSelectedListener
     {
@@ -46,14 +38,11 @@ namespace Naxam.BottomNavs.Platform.Droid
         Utils.IPageController _pageController;
         private LinearLayout _rootLayout;
 
-
         public BottomTabbedRenderer()
         {
             AutoPackage = false;
             ItemPadding = ItemPadding ?? 0;
         }
-
-        #region IOnTabClickListener
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
@@ -66,15 +55,8 @@ namespace Naxam.BottomNavs.Platform.Droid
 
         public void OnTabSelected(int position)
         {
-            //Do we need this call? It's also done in OnElementPropertyChanged
-            // SwitchContent(Element.Children[position]); 
             Element.CurrentPage = Element.Children[position];
         }
-
-        public void OnTabReSelected(int position)
-        {
-        }
-        #endregion
 
         protected override void Dispose(bool disposing)
         {
@@ -127,7 +109,6 @@ namespace Naxam.BottomNavs.Platform.Droid
 
             if (e.NewElement != null)
             {
-
                 BottomTabbedPage bottomBarPage = e.NewElement;
 
                 if (_bottomBar == null)
@@ -227,45 +208,46 @@ namespace Naxam.BottomNavs.Platform.Droid
                 _frameLayout.Layout(0, 0, width, height - tabsHeight);
                 _pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.Height));
                 _bottomBar.Layout(0, height - tabsHeight, width, height);
-            }
 
-            var item = (ViewGroup)_bottomBar.GetChildAt(0);
-            item.Measure(width, tabsHeight);
-            item.Layout(0, 0, width, tabsHeight);
-            int item_w = width / item.ChildCount;
-            for (int i = 0; i < item.ChildCount; i++)
-            {
-                var frame = (FrameLayout)item.GetChildAt(i);
-                var imgView = _bottomBar.GetIconAt(i);
-                var baselayout = frame.GetChildAt(1);
-                if (baselayout != null)
+                var item = (ViewGroup)_bottomBar.GetChildAt(0);
+                item.Measure(width, tabsHeight);
+                item.Layout(0, 0, width, tabsHeight);
+                int item_w = width / item.ChildCount;
+
+                for (int i = 0; i < item.ChildCount; i++)
                 {
-                    if (baselayout.GetType() == typeof(BaselineLayout))
+                    var frame = (FrameLayout)item.GetChildAt(i);
+                    var imgView = _bottomBar.GetIconAt(i);
+                    var baselayout = frame.GetChildAt(1);
+                    if (baselayout != null)
                     {
-                        var basel = (BaselineLayout)baselayout;
-                        var small = _bottomBar.GetSmallLabelAt(i);
-                        var large = _bottomBar.GetLargeLabelAt(i);
-                        int baselH = Math.Max(small.Height, large.Height);
-                        int baselW = Math.Min(small.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
-
-                        int imgH = imgView.LayoutParameters.Height;
-                        int imgW = Math.Min(imgView.LayoutParameters.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
-                        int imgTop = (tabsHeight - imgH - baselH) / 2;
-                        int imgLeft = (item_w - imgW) / 2;
-                        int topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemPadding.Value);
-                        int leftBaseLine = (item_w - baselW) / 2;
-
-                        imgView.Measure(MeasureSpecFactory.MakeMeasureSpec(imgW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(imgH, MeasureSpecMode.AtMost));
-                        imgView.Layout(imgLeft, imgTop, imgW + imgLeft, imgH + imgTop);
-                        basel.Measure(MeasureSpecFactory.MakeMeasureSpec(baselW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.AtMost));
-                        basel.Layout(leftBaseLine, topBaseLine, leftBaseLine + baselW, topBaseLine + baselH);
-
-                        var breaktext = small.Paint.BreakText(small.Text, true, item_w - (int)Context.ToPixels(ItemPadding.Value), null);
-                        var text = small.Text;
-                        if (text.Length > breaktext)
+                        if (baselayout.GetType() == typeof(BaselineLayout))
                         {
-                            small.Text = text.Substring(0, breaktext - 1);
-                            large.Text = text.Substring(0, breaktext - 1);
+                            var basel = (BaselineLayout)baselayout;
+                            var small = _bottomBar.GetSmallLabelAt(i);
+                            var large = _bottomBar.GetLargeLabelAt(i);
+                            int baselH = Math.Max(small.Height, large.Height);
+                            int baselW = Math.Min(small.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
+
+                            int imgH = imgView.LayoutParameters.Height;
+                            int imgW = Math.Min(imgView.LayoutParameters.Width, item_w - (int)Context.ToPixels(ItemPadding.Value));
+                            int imgTop = (tabsHeight - imgH - baselH) / 2;
+                            int imgLeft = (item_w - imgW) / 2;
+                            int topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemPadding.Value);
+                            int leftBaseLine = (item_w - baselW) / 2;
+
+                            imgView.Measure(MeasureSpecFactory.MakeMeasureSpec(imgW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(imgH, MeasureSpecMode.AtMost));
+                            imgView.Layout(imgLeft, imgTop, imgW + imgLeft, imgH + imgTop);
+                            basel.Measure(MeasureSpecFactory.MakeMeasureSpec(baselW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.AtMost));
+                            basel.Layout(leftBaseLine, topBaseLine, leftBaseLine + baselW, topBaseLine + baselH);
+
+                            var breaktext = small.Paint.BreakText(small.Text, true, item_w - (int)Context.ToPixels(ItemPadding.Value), null);
+                            var text = small.Text;
+                            if (text.Length > breaktext)
+                            {
+                                small.Text = text.Substring(0, breaktext - 1);
+                                large.Text = text.Substring(0, breaktext - 1);
+                            }
                         }
                     }
                 }
@@ -278,19 +260,11 @@ namespace Naxam.BottomNavs.Platform.Droid
 
         void UpdateTabs()
         {
-            // create tab items
             SetTabItems();
-             
         }
 
         void SetTabItems()
         {
-            //BottomBarTab [] tabs = Element.Children.Select (page => {
-            //	var tabIconId = ResourceManagerEx.IdFromTitle (page.Icon, ResourceManager.DrawableClass);
-            //	return new BottomBarTab (tabIconId, page.Title);
-            //}).ToArray ();
-
-            //_bottomBar.SetItems (tabs);
             var tabsCount = Math.Min(Element.Children.Count, _bottomBar.MaxItemCount);
             for (int i = 0; i < tabsCount; i++)
             {
@@ -313,9 +287,11 @@ namespace Naxam.BottomNavs.Platform.Droid
                     _bottomBar.SetIconSize(IconSize.Value, IconSize.Value);
                 }
                 if (FontSize.HasValue)
+                {
                     _bottomBar.SetTextSize(FontSize.Value);
-                _bottomBar.TextAlignment = Android.Views.TextAlignment.Center;
+                }
 
+                _bottomBar.TextAlignment = Android.Views.TextAlignment.Center;
             }
         }
     }
