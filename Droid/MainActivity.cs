@@ -3,7 +3,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 
-namespace BottomTabbedPage.Demo.Droid
+namespace Naxam.BottomTabbedPage.Demo.Droid
 {
     [Activity(Label = "Bottom Tabbed", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity

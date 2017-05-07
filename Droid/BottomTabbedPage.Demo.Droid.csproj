@@ -7,7 +7,7 @@
     <ProjectGuid>{98E4BF61-0B7E-4F8F-A599-78235D272669}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>BottomTabbedPage.Demo.Droid</RootNamespace>
+    <RootNamespace>Naxam.BottomTabbedPage.Demo.Droid</RootNamespace>
     <AssemblyName>BottomTabbedPage.Demo.Droid</AssemblyName>
     <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
@@ -120,6 +120,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BottomTabbedRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
