@@ -14,7 +14,7 @@ namespace BottomTabbedPage.Demo.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            LoadApplication(new App());
+            LoadApplication(new Naxam.BottomTabbedPage.Demo.App());
 
             return base.FinishedLaunching(app, options);
         }
