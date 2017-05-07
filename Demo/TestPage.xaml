@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="Naxam.Demo.TestPage"
+    Title="Test"
+    >
+	<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>   
+
+        <BoxView 
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            Color="Maroon"
+            Grid.Row="0"
+        />
+
+        <BoxView 
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            Color="Green"
+            Grid.Row="1"
+        />
+
+        <Button 
+            x:Name="btnNav"
+            Text="Nav Button"
+            Grid.Row="2"
+            />
+    </Grid>
+</ContentPage>
