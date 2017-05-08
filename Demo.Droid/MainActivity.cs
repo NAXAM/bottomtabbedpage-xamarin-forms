@@ -45,8 +45,10 @@ namespace Naxam.Demo.Droid
             BottomTabbedRenderer.ItemIconTintList = stateList;
             BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "HiraginoKakugoProNW3.otf");
             BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
-            BottomTabbedRenderer.ItemPadding = 4;
-            BottomTabbedRenderer.BottomBarHeight = 59;
+            BottomTabbedRenderer.ItemSpacing = 24;
+            BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(12);
+            BottomTabbedRenderer.BottomBarHeight = 160;
+            BottomTabbedRenderer.ItemAlign = BottomTabbedRenderer.ItemAlignFlags.Top;
         }
     }
 }

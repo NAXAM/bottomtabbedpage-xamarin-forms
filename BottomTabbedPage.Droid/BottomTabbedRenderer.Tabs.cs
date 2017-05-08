@@ -6,6 +6,7 @@ using Android.Views;
 using Com.Ittianyu.Bottomnavigationviewex;
 using Naxam.Controls.Platform.Droid.Utils;
 using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms;
 
 namespace Naxam.Controls.Platform.Droid
 {
@@ -14,11 +15,18 @@ namespace Naxam.Controls.Platform.Droid
         public static int? ItemBackgroundResource;
         public static ColorStateList ItemIconTintList;
         public static ColorStateList ItemTextColor;
-        public static Color? BackgroundColor;
+        public static Android.Graphics.Color? BackgroundColor;
         public static Typeface Typeface;
         public static float? IconSize;
         public static float? FontSize;
-        public static float? ItemPadding;
+        public static float? ItemSpacing;
+        public static ItemAlignFlags ItemAlign;
+        public static Thickness ItemPadding;
+
+        public enum ItemAlignFlags
+        {
+            Default, Center, Top, Bottom
+        }
 
         BottomNavigationMenu _menu;
         BottomNavigationMenu menu => (_menu = _menu ?? (BottomNavigationMenu)bottomNav.Menu);
@@ -29,7 +37,6 @@ namespace Naxam.Controls.Platform.Droid
             var pageIndex = index % Element.Children.Count;
 
             Element.CurrentPage = Element.Children[pageIndex];
-
             return true;
         }
 

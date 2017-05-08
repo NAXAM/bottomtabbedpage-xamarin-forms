@@ -14,12 +14,18 @@ namespace Naxam.Demo
 
             page.Children.Add(new NavigationPage (
                 new TestPage()) {
-                Title = "Test 1",
+                Title = "Test 1 Test 1 Test 1",
                 Icon = "icon.png"
             });
-			page.Children.Add(new TestPage()
+            page.Children.Add(new NavigationPage(
+               new TestPage())
+            {
+                Title = "Test 2 Test 2 Test 2",
+                Icon = "icon.png"
+            });
+            page.Children.Add(new TestPage()
 			{
-				Title = "Test 2",
+				Title = "Test 3",
 				Icon = "icon.png"
 			});
 
