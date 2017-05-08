@@ -50,6 +50,10 @@ BottomTabbedRenderer.ItemTextColor = stateList;
 BottomTabbedRenderer.ItemIconTintList = stateList;
 BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "HiraginoKakugoProNW3.otf");
 BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
+BottomTabbedRenderer.ItemSpacing = 8;
+BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(8);
+BottomTabbedRenderer.BottomBarHeight = 80;
+BottomTabbedRenderer.ItemAlign = BottomTabbedRenderer.ItemAlignFlags.Center;
 ```
 
 ## Source Code
