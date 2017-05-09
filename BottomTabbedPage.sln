@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Droid", "Demo.Droid\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Forms", "BottomTabbedPage\BottomTabbedPage.Forms.csproj", "{B3F20A5F-FB43-4825-BD57-E1B7976020F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Droid", "BottomTabbedPage.Droid\BottomTabbedPage.Droid.csproj", "{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Platform.Droid", "BottomTabbedPage.Droid\BottomTabbedPage.Platform.Droid.csproj", "{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}"
 EndProject

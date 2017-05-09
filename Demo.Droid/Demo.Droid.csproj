@@ -143,9 +143,9 @@
       <Project>{B3F20A5F-FB43-4825-BD57-E1B7976020F8}</Project>
       <Name>BottomTabbedPage.Forms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BottomTabbedPage.Droid\BottomTabbedPage.Droid.csproj">
+    <ProjectReference Include="..\BottomTabbedPage.Droid\BottomTabbedPage.Platform.Droid.csproj">
       <Project>{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}</Project>
-      <Name>BottomTabbedPage.Droid</Name>
+      <Name>BottomTabbedPage.Platform.Droid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

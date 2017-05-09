@@ -82,10 +82,6 @@ namespace Naxam.Controls.Platform.Droid
         {
             var width = right - left;
             var height = bottom - top;
-            int tabsHeight = 0;
-
-
-
 
             base.OnLayout(changed, left, top, right, bottom);
 
@@ -94,31 +90,22 @@ namespace Naxam.Controls.Platform.Droid
                 return;
             }
 
-
-
-
             rootLayout.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
-
-
-            tabsHeight = BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : Math.Min(height, Math.Max(bottomNav.MeasuredHeight, bottomNav.MinimumHeight));
-
-
-
-
+            
             TabbedController.ContainerArea = new Rectangle(
                 0, 0,
                 Context.FromPixels(rootLayout.MeasuredWidth),
                 Context.FromPixels(pageContainer.MeasuredHeight)
             );
 
-
-
             rootLayout.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.Exactly));
             rootLayout.Layout(0, 0, rootLayout.MeasuredWidth, rootLayout.MeasuredHeight);
+
+            int tabsHeight = bottomNav.MeasuredHeight;
 
             if (ItemPadding == null)
                 ItemPadding = new Thickness(0);
@@ -136,7 +123,6 @@ namespace Naxam.Controls.Platform.Droid
                 MeasureSpecFactory.MakeMeasureSpec(item_w, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.Exactly));
                 frame.Layout(i * item_w, 0, i * item_w + item_w, tabsHeight);
-
 
                 var imgView = bottomNav.GetIconAt(i);
                 var baselayout = frame.GetChildAt(1);

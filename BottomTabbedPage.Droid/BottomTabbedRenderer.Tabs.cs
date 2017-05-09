@@ -42,6 +42,8 @@ namespace Naxam.Controls.Platform.Droid
 
         void SetupTabItems()
         {
+            menu.ClearAll ();
+
             var tabsCount = Math.Min(Element.Children.Count, bottomNav.MaxItemCount);
             for (int i = 0; i < tabsCount; i++)
             {

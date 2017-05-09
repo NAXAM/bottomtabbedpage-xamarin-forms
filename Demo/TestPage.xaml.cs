@@ -7,12 +7,16 @@ namespace Naxam.Demo
 {
     public partial class TestPage : ContentPage
     {
-        public TestPage()
+        public TestPage (bool allowsNav=true)
         {
-            InitializeComponent();
+            InitializeComponent ();
 
             btnNav.Clicked += async delegate {
-                await Navigation?.PushAsync(new TestPage {
+                if (!allowsNav) {
+                    return;
+                }
+
+                await Navigation?.PushAsync (new TestPage {
                     Title = Title + ":1"
                 }, true);
             };

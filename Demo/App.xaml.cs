@@ -23,7 +23,7 @@ namespace Naxam.Demo
                 Title = "Test 2 Test 2 Test 2",
                 Icon = "icon.png"
             });
-            page.Children.Add(new TestPage()
+            page.Children.Add(new TestPage(false)
 			{
 				Title = "Test 3",
 				Icon = "icon.png"
