@@ -43,7 +43,7 @@ namespace Naxam.Demo.Droid
             BottomTabbedRenderer.IconSize = 16;
             BottomTabbedRenderer.ItemTextColor = stateList;
             BottomTabbedRenderer.ItemIconTintList = stateList;
-            BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "HiraginoKakugoProNW3.otf");
+            BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "architep.ttf");
             BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
             BottomTabbedRenderer.ItemSpacing = 24;
             BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(12);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <!-- Required elements-->
+        <id>Naxam.BottomTabbedPage</id>
+        <version>0.0.1</version>
+        <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
+        <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
+        <owners>NAXAM CO.,LTD</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <title>Naxam - BottomTabbedPage</title>
+        <releaseNotes>Ittianyu BottomNavigationViewEx v0.0.1</releaseNotes>
+        <summary>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</summary>
+        <projectUrl>https://naxam.net</projectUrl>
+        <copyright>Copyright (c) 2017 NAXAM</copyright>
+        <tags>Xamarin.Android, Xamarin.Forms, BottomNaviationView, BottomNavigationViewEx, BottomTabbedPage</tags>
+        <dependencies>
+            <group>
+                <dependency id="Xamarin.Forms" version="2.3.4.231" />
+            </group>
+
+            <group targetFramework="MonoAndroid10">
+                <dependency id="Naxam.Ittianyu.BottomNavExtension" version="1.1.7" />
+            </group>
+        </dependencies>
+    </metadata>
+    <!-- Optional 'files' node -->
+    <files>
+        <!--PCL-->
+        <file src="BottomTabbedPage/bin/Release/Naxam.BottomTabbedPage.Forms.dll" target="lib/portable-net45+wp80+win8+wpa81/Naxam.BottomTabbedPage.Forms.dll" />
+
+        <!--Android-->
+        <file src="BottomTabbedPage.Droid/bin/Release/Naxam.BottomTabbedPage.Forms.dll" target="lib/MonoAndroid10/Naxam.BottomTabbedPage.Forms.dll" />
+        <file src="BottomTabbedPage.Droid/bin/Release/Naxam.BottomTabbedPage.Platform.Droid.dll" target="lib/MonoAndroid10/Naxam.BottomTabbedPage.Platform.Droid.dll" />
+    </files>
+</package>
