@@ -25,5 +25,5 @@
 		<item name="colorAccent">#FF4081</item>
 	</style>
     <drawable name="background">#00ffffff</drawable>
-    <drawable name="selected">#0Dffffff</drawable>
+    <drawable name="selected">#0Dffffff</drawable> 
 </resources>

@@ -138,7 +138,7 @@ namespace Naxam.Controls.Platform.Droid
                         var large = bottomNav.GetLargeLabelAt(i); 
 
                         //Height Container text
-                        int baselH = Math.Max(small.Height, large.Height) - (int)Context.ToPixels(4);
+                        int baselH = Math.Max(small.Height, large.Height);
                         //width Container text
                         int baselW = Math.Min(small.Width, item_w - (int)Context.ToPixels(ItemPadding.Left) - (int)Context.ToPixels(ItemPadding.Right));
                         //Icon Height
@@ -267,7 +267,6 @@ namespace Naxam.Controls.Platform.Droid
         void SwitchContent(Page page)
         {
             Context.HideKeyboard(this);
-            pageContainer.RemoveAllViews();
 
             if (page == null)
             {
@@ -280,6 +279,10 @@ namespace Naxam.Controls.Platform.Droid
             }
             var pageContent = Platform.GetRenderer(page).ViewGroup;
             pageContainer.AddView(pageContent);
+            if (pageContainer.ChildCount > 1)
+            {
+                pageContainer.RemoveViewAt(0);
+            }
         }
 
         void UpdateIgnoreContainerAreas()

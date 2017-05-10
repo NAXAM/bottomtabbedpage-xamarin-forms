@@ -39,12 +39,6 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Naxam.BottomTabbedPage.Forms, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.BottomTabbedPage.0.0.1\lib\MonoAndroid10\Naxam.BottomTabbedPage.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Naxam.BottomTabbedPage.Platform.Droid, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.BottomTabbedPage.0.0.1\lib\MonoAndroid10\Naxam.BottomTabbedPage.Platform.Droid.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -139,6 +133,14 @@
     <AndroidResource Include="Resources\drawable\bnv_selector.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BottomTabbedPage.Droid\BottomTabbedPage.Platform.Droid.csproj">
+      <Project>{60aa62d7-8c05-44b5-85ee-95dd36a6c43a}</Project>
+      <Name>BottomTabbedPage.Platform.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BottomTabbedPage\BottomTabbedPage.Forms.csproj">
+      <Project>{b3f20a5f-fb43-4825-bd57-e1b7976020f8}</Project>
+      <Name>BottomTabbedPage.Forms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Demo\Demo.csproj">
       <Project>{DEFB4EE7-1350-4DDC-BE1C-2F6BBAD93527}</Project>
       <Name>Demo</Name>
