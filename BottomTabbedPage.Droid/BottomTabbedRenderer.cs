@@ -146,9 +146,9 @@ namespace Naxam.Controls.Platform.Droid
                         //Icon Width
                         int imgW = Math.Min(imgView.LayoutParameters.Width, item_w - (int)Context.ToPixels(ItemPadding.Left) - (int)Context.ToPixels(ItemPadding.Right));
 
-                        int imgTop = (tabsHeight - imgH - baselH - (int)Context.ToPixels(ItemSpacing.Value)) / 2;
+                        int imgTop = (tabsHeight - imgH - baselH - (int)Context.ToPixels(ItemSpacing)) / 2;
                         int imgLeft = (item_w - imgW) / 2;
-                        int topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing.Value);
+                        int topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing);
                         int leftBaseLine = (item_w - baselW) / 2;
 
                         switch (ItemAlign)
@@ -159,11 +159,11 @@ namespace Naxam.Controls.Platform.Droid
                                 break;
                             case ItemAlignFlags.Top:
                                 imgTop = (int)Context.ToPixels(ItemPadding.Top);
-                                topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing.Value);
+                                topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing);
                                 break;
                             case ItemAlignFlags.Bottom:
-                                imgTop = tabsHeight - imgH - baselH - (int)Context.ToPixels(ItemSpacing.Value) - (int)Context.ToPixels(ItemPadding.Bottom);
-                                topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing.Value);
+                                imgTop = tabsHeight - imgH - baselH - (int)Context.ToPixels(ItemSpacing) - (int)Context.ToPixels(ItemPadding.Bottom);
+                                topBaseLine = imgTop + imgH + (int)Context.ToPixels(ItemSpacing);
                                 break;
                         }
                         //layout icon, text

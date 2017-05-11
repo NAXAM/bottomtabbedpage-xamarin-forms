@@ -19,7 +19,7 @@ namespace Naxam.Controls.Platform.Droid
         public static Typeface Typeface;
         public static float? IconSize;
         public static float? FontSize;
-        public static float? ItemSpacing;
+        public static float ItemSpacing;
         public static ItemAlignFlags ItemAlign;
         public static Thickness ItemPadding;
 
