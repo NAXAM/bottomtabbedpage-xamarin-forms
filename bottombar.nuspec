@@ -3,13 +3,13 @@
     <metadata>
         <!-- Required elements-->
         <id>Naxam.BottomTabbedPage</id>
-        <version>0.0.3</version>
+        <version>0.0.4</version>
         <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
         <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
         <owners>NAXAM CO.,LTD</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <title>Naxam - BottomTabbedPage</title>
-        <releaseNotes>Fix issue with item text height</releaseNotes>
+        <releaseNotes>Fix issue with item spacing</releaseNotes>
         <summary>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</summary>
         <projectUrl>https://naxam.net</projectUrl>
         <copyright>Copyright (c) 2017 NAXAM</copyright>
