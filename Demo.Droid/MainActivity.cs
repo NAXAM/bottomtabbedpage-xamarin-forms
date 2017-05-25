@@ -48,7 +48,7 @@ namespace Naxam.Demo.Droid
             BottomTabbedRenderer.ItemSpacing = 24;
             BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(12);
             BottomTabbedRenderer.BottomBarHeight = 160;
-            BottomTabbedRenderer.ItemAlign = BottomTabbedRenderer.ItemAlignFlags.Top;
+            BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Top;
         }
     }
 }
