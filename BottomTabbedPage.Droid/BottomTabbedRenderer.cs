@@ -23,12 +23,15 @@ namespace Naxam.Controls.Platform.Droid
         RelativeLayout rootLayout;
         FrameLayout pageContainer;
         BottomNavigationViewEx bottomNav;
+        readonly int barId;
 
         IPageController TabbedController => Element as IPageController;
 
         public BottomTabbedRenderer()
         {
             AutoPackage = false;
+
+            barId = GenerateViewId();
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<BottomTabbedPage> e)
@@ -37,7 +40,9 @@ namespace Naxam.Controls.Platform.Droid
 
             if (e.OldElement != null)
             {
-                //TODO Cleanup
+                e.OldElement.ChildAdded -= PagesChanged;
+                e.OldElement.ChildRemoved -= PagesChanged;
+                e.OldElement.ChildrenReordered -= PagesChanged;
             }
 
             if (e.NewElement == null)
@@ -50,11 +55,32 @@ namespace Naxam.Controls.Platform.Droid
             if (rootLayout == null)
             {
                 SetupNativeView();
-                SetupEventHandlers();
             }
 
             SetupTabItems();
             SwitchContent(Element.CurrentPage);
+
+            Element.ChildAdded += PagesChanged;
+            Element.ChildRemoved += PagesChanged;
+            Element.ChildrenReordered += PagesChanged;
+        }
+
+        void PagesChanged(object sender, EventArgs e)
+        {
+            SetupBottomBar();
+            SetupTabItems();
+
+            if (Element.Children.Count == 0) {
+                return;
+            }
+
+            var menu = this.menu;
+            var itemIndex = menu.FindItemIndex(bottomNav.SelectedItemId);
+            var pageIndex = Element.Children.IndexOf(Element.CurrentPage);
+            var page = Element.Children[itemIndex];
+            if (pageIndex >= 0 && pageIndex != itemIndex && pageIndex < bottomNav.ItemCount) {
+                bottomNav.SelectedItemId = menu.GetItem(pageIndex).ItemId;
+            }
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -93,7 +119,7 @@ namespace Naxam.Controls.Platform.Droid
             rootLayout.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
-            
+
             TabbedController.ContainerArea = new Rectangle(
                 0, 0,
                 Context.FromPixels(rootLayout.MeasuredWidth),
@@ -105,12 +131,13 @@ namespace Naxam.Controls.Platform.Droid
                 MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.Exactly));
             rootLayout.Layout(0, 0, rootLayout.MeasuredWidth, rootLayout.MeasuredHeight);
 
-            int tabsHeight = bottomNav.MeasuredHeight;
+            if (Element.Children.Count == 0) {
+                return;
+            }
 
-            if (ItemPadding == null)
-                ItemPadding = new Thickness(0);
+			int tabsHeight = bottomNav.MeasuredHeight;
 
-            var item = (ViewGroup)bottomNav.GetChildAt(0);
+			var item = (ViewGroup)bottomNav.GetChildAt(0);
             item.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.Exactly));
@@ -131,11 +158,11 @@ namespace Naxam.Controls.Platform.Droid
                     if (baselayout.GetType() == typeof(BaselineLayout))
                     {
                         //Container text
-                        var basel = (BaselineLayout)baselayout; 
+                        var basel = (BaselineLayout)baselayout;
                         //Small text
-                        var small = bottomNav.GetSmallLabelAt(i); 
+                        var small = bottomNav.GetSmallLabelAt(i);
                         //Large text
-                        var large = bottomNav.GetLargeLabelAt(i); 
+                        var large = bottomNav.GetLargeLabelAt(i);
 
                         //Height Container text
                         int baselH = Math.Max(small.Height, large.Height);
@@ -171,7 +198,7 @@ namespace Naxam.Controls.Platform.Droid
                         imgView.Layout(imgLeft, imgTop, imgW + imgLeft, imgH + imgTop);
                         basel.Measure(MeasureSpecFactory.MakeMeasureSpec(baselW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.Exactly));
                         basel.Layout(leftBaseLine, topBaseLine, leftBaseLine + baselW, topBaseLine + baselH);
-                       
+
                         //text break
                         var breaktext = small.Paint.BreakText(small.Text, true, item_w - (int)Context.ToPixels(ItemPadding.Right) - (int)Context.ToPixels(ItemPadding.Left), null);
                         var text = small.Text;
@@ -188,29 +215,36 @@ namespace Naxam.Controls.Platform.Droid
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && rootLayout != null)
+            if (disposing)
             {
-                //TODO Cleanup
-                RemoveAllViews();
-                foreach (Page pageToRemove in Element.Children)
-                {
-                    IVisualElementRenderer pageRenderer = Platform.GetRenderer(pageToRemove);
+				Element.ChildAdded -= PagesChanged;
+				Element.ChildRemoved -= PagesChanged;
+				Element.ChildrenReordered -= PagesChanged;
 
-                    if (pageRenderer != null)
+                if (rootLayout != null)
+                {
+                    //TODO Cleanup
+                    RemoveAllViews();
+                    foreach (Page pageToRemove in Element.Children)
                     {
-                        pageRenderer.ViewGroup.RemoveFromParent();
-                        pageRenderer.Dispose();
-                    }
-                }
+                        IVisualElementRenderer pageRenderer = Platform.GetRenderer(pageToRemove);
 
-                if (bottomNav != null)
-                {
-                    bottomNav.SetOnNavigationItemSelectedListener(null);
-                    bottomNav.Dispose();
-                    bottomNav = null;
+                        if (pageRenderer != null)
+                        {
+                            pageRenderer.ViewGroup.RemoveFromParent();
+                            pageRenderer.Dispose();
+                        }
+                    }
+
+                    if (bottomNav != null)
+                    {
+                        bottomNav.SetOnNavigationItemSelectedListener(null);
+                        bottomNav.Dispose();
+                        bottomNav = null;
+                    }
+                    rootLayout.Dispose();
+                    rootLayout = null;
                 }
-                rootLayout.Dispose();
-                rootLayout = null;
             }
 
             base.Dispose(disposing);
@@ -222,7 +256,6 @@ namespace Naxam.Controls.Platform.Droid
             {
                 LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent),
             };
-            var barId = GenerateViewId();
             var pageParams = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
             pageParams.AddRule(LayoutRules.Above, barId);
 
@@ -232,36 +265,13 @@ namespace Naxam.Controls.Platform.Droid
                 Id = GenerateViewId()
             };
 
-            var barParams = new RelativeLayout.LayoutParams(
-                LayoutParams.MatchParent,
-                BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : LayoutParams.WrapContent);
-            barParams.AddRule(LayoutRules.AlignParentBottom);
-            bottomNav = new BottomNavigationViewEx(Context)
-            {
-                LayoutParameters = barParams,
-                Id = barId
-            };
+
 
             rootLayout.AddView(pageContainer, 0, pageParams);
-            rootLayout.AddView(bottomNav, 1, barParams);
-            AddView(rootLayout);
 
-            if (BackgroundColor.HasValue)
-            {
-                bottomNav.SetBackgroundColor(BackgroundColor.Value);
-            }
-            if (ItemIconTintList != null)
-            {
-                bottomNav.ItemIconTintList = ItemIconTintList;
-            }
-            if (ItemTextColor != null)
-            {
-                bottomNav.ItemTextColor = ItemTextColor;
-            }
-            if (ItemBackgroundResource.HasValue)
-            {
-                bottomNav.ItemBackgroundResource = ItemBackgroundResource.Value;
-            }
+            SetupBottomBar();
+
+            AddView(rootLayout);
         }
 
         void SwitchContent(Page page)

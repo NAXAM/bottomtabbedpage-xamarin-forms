@@ -11,25 +11,65 @@ namespace Naxam.Demo
             InitializeComponent();
 
             var page = new Naxam.Controls.Forms.BottomTabbedPage();
+            var fPage = new TestPage {
+                Title = "Test 1"
+            };
+            fPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Command = new Command((obj) =>
+                {
 
-            page.Children.Add(new NavigationPage (
-                new TestPage()) {
+					var currentIndex = page.Children.IndexOf(page.CurrentPage);
+
+					if (currentIndex == 0)
+					{
+						return;
+					}
+
+					var leftPage = page.Children[currentIndex - 1];
+					page.Children[currentIndex - 1] = page.CurrentPage;
+					page.Children[currentIndex] = leftPage;
+                }),
+                Text = "Left"
+            });
+            fPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Command = new Command((obj) =>
+                {
+                    var currentIndex = page.Children.IndexOf(page.CurrentPage);
+
+                    if (currentIndex == page.Children.Count - 1) {
+                        return;
+                    }
+
+					var nextPage = page.Children[currentIndex + 1];
+					page.Children[currentIndex + 1] = page.CurrentPage;
+                    page.Children[currentIndex] = nextPage;
+                }),
+                Text = "Right"
+            });
+
+            page.Children.Add(new NavigationPage(fPage)
+            {
                 Title = "Test 1 Test 1 Test 1",
                 Icon = "icon.png"
             });
             page.Children.Add(new NavigationPage(
-               new TestPage())
+			   new TestPage
+			   {
+				   Title = "Test 2"
+			   })
             {
                 Title = "Test 2 Test 2 Test 2",
                 Icon = "icon.png"
             });
             page.Children.Add(new TestPage(false)
-			{
-				Title = "Test 3",
-				Icon = "icon.png"
-			});
+            {
+                Title = "Test 3",
+                Icon = "icon.png"
+            });
 
-			MainPage = page;
+            MainPage = page;
         }
 
         protected override void OnStart()

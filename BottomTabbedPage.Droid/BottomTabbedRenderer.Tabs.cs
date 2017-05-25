@@ -7,6 +7,7 @@ using Com.Ittianyu.Bottomnavigationviewex;
 using Naxam.Controls.Platform.Droid.Utils;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms;
+using Android.Widget;
 
 namespace Naxam.Controls.Platform.Droid
 {
@@ -28,27 +29,32 @@ namespace Naxam.Controls.Platform.Droid
             Default, Center, Top, Bottom
         }
 
-        BottomNavigationMenu _menu;
-        BottomNavigationMenu menu => (_menu = _menu ?? (BottomNavigationMenu)bottomNav.Menu);
+        BottomNavigationMenu menu => (BottomNavigationMenu)bottomNav.Menu;
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
+            var menu = this.menu;
             var index = menu.FindItemIndex(item.ItemId);
             var pageIndex = index % Element.Children.Count;
+            var currentPageIndex = Element.Children.IndexOf(Element.CurrentPage);
 
-            Element.CurrentPage = Element.Children[pageIndex];
+            if (currentPageIndex != pageIndex)
+            {
+                Element.CurrentPage = Element.Children[pageIndex];
+            }
             return true;
         }
 
         void SetupTabItems()
         {
-            menu.ClearAll ();
+            var menu = this.menu;
+            menu.ClearAll();
 
             var tabsCount = Math.Min(Element.Children.Count, bottomNav.MaxItemCount);
             for (int i = 0; i < tabsCount; i++)
             {
                 var page = Element.Children[i];
-                var menuItem = bottomNav.Menu.Add(0, i, 0, page.Title);
+                var menuItem = menu.Add(0, i, 0, page.Title);
                 var tabIconId = ResourceManagerEx.IdFromTitle(page.Icon, ResourceManager.DrawableClass);
                 menuItem.SetIcon(tabIconId);
             }
@@ -75,9 +81,42 @@ namespace Naxam.Controls.Platform.Droid
             }
         }
 
-        void SetupEventHandlers()
+        void SetupBottomBar()
         {
+            if (bottomNav != null)
+            {
+                rootLayout.RemoveView(bottomNav);
+                bottomNav.SetOnNavigationItemSelectedListener(null);
+            }
+
+            var barParams = new Android.Widget.RelativeLayout.LayoutParams(
+                LayoutParams.MatchParent,
+                BottomBarHeight.HasValue ? (int)Context.ToPixels(BottomBarHeight.Value) : LayoutParams.WrapContent);
+            barParams.AddRule(LayoutRules.AlignParentBottom);
+            bottomNav = new BottomNavigationViewEx(Context)
+            {
+                LayoutParameters = barParams,
+                Id = barId
+            };
+            if (BackgroundColor.HasValue)
+            {
+                bottomNav.SetBackgroundColor(BackgroundColor.Value);
+            }
+            if (ItemIconTintList != null)
+            {
+                bottomNav.ItemIconTintList = ItemIconTintList;
+            }
+            if (ItemTextColor != null)
+            {
+                bottomNav.ItemTextColor = ItemTextColor;
+            }
+            if (ItemBackgroundResource.HasValue)
+            {
+                bottomNav.ItemBackgroundResource = ItemBackgroundResource.Value;
+            }
+
             bottomNav.SetOnNavigationItemSelectedListener(this);
+            rootLayout.AddView(bottomNav, 1, barParams);
         }
     }
 }
