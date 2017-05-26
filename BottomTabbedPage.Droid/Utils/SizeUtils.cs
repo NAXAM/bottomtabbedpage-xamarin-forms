@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Forms;
@@ -19,7 +12,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
     using RelativeLayout = Android.Widget.RelativeLayout;
     using Platform = Xamarin.Forms.Platform.Android.Platform;
 
-    internal static class SizeUtils
+    internal static class BottomTabbedRendererUtils
     {
         public static Rectangle CreateRect(this Context context, int width, int height)
         {
@@ -30,8 +23,66 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 );
         }
 
-        public static void LayoutBottomBar(BottomNavigationViewEx bottomNav, int width) {
-            var Context = bottomNav.Context;
+        public static void HandlePagesChanged(this BottomTabbedRenderer renderer)
+        {
+            renderer.SetupBottomBar();
+            renderer.SetupTabItems();
+
+            if (renderer.Element.Children.Count == 0)
+            {
+                return;
+            }
+
+            var rootLayout = (RelativeLayout)renderer.GetChildAt(0);
+            var bottomNav = (BottomNavigationViewEx)rootLayout.GetChildAt(1);
+            var menu = (BottomNavigationMenu)bottomNav.Menu;
+
+            var itemIndex = menu.FindItemIndex(bottomNav.SelectedItemId);
+            var pageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
+            var page = renderer.Element.Children[itemIndex];
+            if (pageIndex >= 0 && pageIndex != itemIndex && pageIndex < bottomNav.ItemCount)
+            {
+                bottomNav.SelectedItemId = menu.GetItem(pageIndex).ItemId;
+            }
+        }
+
+        public static void SwitchPage(this BottomTabbedRenderer renderer, IMenuItem item)
+        {
+            var rootLayout = (RelativeLayout)renderer.GetChildAt(0);
+            var bottomNav = (BottomNavigationViewEx)rootLayout.GetChildAt(1);
+            var menu = (BottomNavigationMenu)bottomNav.Menu;
+
+            var index = menu.FindItemIndex(item.ItemId);
+            var pageIndex = index % renderer.Element.Children.Count;
+            var currentPageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
+
+            if (currentPageIndex != pageIndex)
+            {
+                renderer.Element.CurrentPage = renderer.Element.Children[pageIndex];
+            }
+        }
+
+        public static void Layout(this BottomTabbedRenderer renderer, int width, int height) {
+            var rootLayout = (RelativeLayout) renderer.GetChildAt(0);
+            var bottomNav = (BottomNavigationViewEx) rootLayout.GetChildAt(1);
+
+            var Context = renderer.Context;
+
+            rootLayout.Measure(
+                MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
+                MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
+
+            ((IPageController) renderer.Element).ContainerArea = Context.CreateRect(rootLayout.MeasuredWidth, rootLayout.GetChildAt(0).MeasuredHeight);
+
+            rootLayout.Measure(
+                MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
+                MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.Exactly));
+            rootLayout.Layout(0, 0, rootLayout.MeasuredWidth, rootLayout.MeasuredHeight);
+
+            if (renderer.Element.Children.Count == 0)
+            {
+                return;
+            }
 
             int tabsHeight = bottomNav.MeasuredHeight;
 
@@ -147,7 +198,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
             }
         }
 
-        public static void SetupBottomBar(this BottomTabbedRenderer renderer, Android.Widget.RelativeLayout rootLayout, BottomNavigationViewEx bottomNav, int barId)
+        public static BottomNavigationViewEx SetupBottomBar(this BottomTabbedRenderer renderer, Android.Widget.RelativeLayout rootLayout, BottomNavigationViewEx bottomNav, int barId)
         {
             if (bottomNav != null)
             {
@@ -183,6 +234,8 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
             bottomNav.SetOnNavigationItemSelectedListener(renderer);
             rootLayout.AddView(bottomNav, 1, barParams);
+
+            return bottomNav;
         }
 
         public static void ChangePage(this BottomTabbedRenderer renderer, FrameLayout pageContainer, Page page) {

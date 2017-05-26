@@ -23,31 +23,21 @@ namespace Naxam.Controls.Platform.Droid
         public static float ItemSpacing;
         public static ItemAlignFlags ItemAlign;
         public static Thickness ItemPadding;
-
-        BottomNavigationMenu menu => (BottomNavigationMenu)bottomNav.Menu;
-
+        
         public bool OnNavigationItemSelected(IMenuItem item)
         {
-            var menu = this.menu;
-            var index = menu.FindItemIndex(item.ItemId);
-            var pageIndex = index % Element.Children.Count;
-            var currentPageIndex = Element.Children.IndexOf(Element.CurrentPage);
-
-            if (currentPageIndex != pageIndex)
-            {
-                Element.CurrentPage = Element.Children[pageIndex];
-            }
+            this.SwitchPage(item);
             return true;
         }
 
-        void SetupTabItems()
+        internal void SetupTabItems()
         {
             Element.SetupTabItems(bottomNav);
         }
 
-        void SetupBottomBar()
+        internal void SetupBottomBar()
         {
-            this.SetupBottomBar(rootLayout, bottomNav, barId);
+            bottomNav = this.SetupBottomBar(rootLayout, bottomNav, barId);
         }
     }
 

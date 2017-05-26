@@ -56,12 +56,11 @@ namespace Naxam.Controls.Platform.Droid
             {
                 SetupNativeView();
             }
-            
-            SetupBottomBar();
-            SetupTabItems();
 
+
+            this.HandlePagesChanged();
             SwitchContent(Element.CurrentPage);
-
+            
             Element.ChildAdded += PagesChanged;
             Element.ChildRemoved += PagesChanged;
             Element.ChildrenReordered += PagesChanged;
@@ -69,20 +68,7 @@ namespace Naxam.Controls.Platform.Droid
 
         void PagesChanged(object sender, EventArgs e)
         {
-            SetupBottomBar();
-            SetupTabItems();
-
-            if (Element.Children.Count == 0) {
-                return;
-            }
-
-            var menu = this.menu;
-            var itemIndex = menu.FindItemIndex(bottomNav.SelectedItemId);
-            var pageIndex = Element.Children.IndexOf(Element.CurrentPage);
-            var page = Element.Children[itemIndex];
-            if (pageIndex >= 0 && pageIndex != itemIndex && pageIndex < bottomNav.ItemCount) {
-                bottomNav.SelectedItemId = menu.GetItem(pageIndex).ItemId;
-            }
+            this.HandlePagesChanged();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -118,22 +104,7 @@ namespace Naxam.Controls.Platform.Droid
                 return;
             }
 
-            rootLayout.Measure(
-                MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
-                MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
-
-            TabbedController.ContainerArea = Context.CreateRect(rootLayout.MeasuredWidth, pageContainer.MinimumHeight);
-
-            rootLayout.Measure(
-                MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
-                MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.Exactly));
-            rootLayout.Layout(0, 0, rootLayout.MeasuredWidth, rootLayout.MeasuredHeight);
-
-            if (Element.Children.Count == 0) {
-                return;
-            }
-
-            SizeUtils.LayoutBottomBar(bottomNav, width);
+            this.Layout(width, height);
         }
 
         protected override void Dispose(bool disposing)
