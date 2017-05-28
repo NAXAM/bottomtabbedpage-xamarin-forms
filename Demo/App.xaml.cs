@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -50,6 +51,16 @@ namespace Naxam.Demo
                     });
                 }),
                 Text = "Add"
+            });
+
+            var random = new Random();
+            fPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Command = new Command((obj) =>
+                {
+                    page.CurrentPage = page.Children[random.Next(page.Children.Count)];
+                }),
+                Text = "Change Current"
             });
             fPage.ToolbarItems.Add(new ToolbarItem
             {

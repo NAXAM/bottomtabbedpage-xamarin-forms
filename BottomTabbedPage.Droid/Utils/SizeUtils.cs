@@ -33,13 +33,17 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 return;
             }
 
+            EnsureTabIndex(renderer);
+        }
+
+        static void EnsureTabIndex(BottomTabbedRenderer renderer)
+        {
             var rootLayout = (RelativeLayout)renderer.GetChildAt(0);
             var bottomNav = (BottomNavigationViewEx)rootLayout.GetChildAt(1);
             var menu = (BottomNavigationMenu)bottomNav.Menu;
 
             var itemIndex = menu.FindItemIndex(bottomNav.SelectedItemId);
             var pageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
-            var page = renderer.Element.Children[itemIndex];
             if (pageIndex >= 0 && pageIndex != itemIndex && pageIndex < bottomNav.ItemCount)
             {
                 bottomNav.SelectedItemId = menu.GetItem(pageIndex).ItemId;
@@ -62,9 +66,10 @@ namespace Naxam.Controls.Platform.Droid.Utils
             }
         }
 
-        public static void Layout(this BottomTabbedRenderer renderer, int width, int height) {
-            var rootLayout = (RelativeLayout) renderer.GetChildAt(0);
-            var bottomNav = (BottomNavigationViewEx) rootLayout.GetChildAt(1);
+        public static void Layout(this BottomTabbedRenderer renderer, int width, int height)
+        {
+            var rootLayout = (RelativeLayout)renderer.GetChildAt(0);
+            var bottomNav = (BottomNavigationViewEx)rootLayout.GetChildAt(1);
 
             var Context = renderer.Context;
 
@@ -72,7 +77,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(height, MeasureSpecMode.AtMost));
 
-            ((IPageController) renderer.Element).ContainerArea = Context.CreateRect(rootLayout.MeasuredWidth, rootLayout.GetChildAt(0).MeasuredHeight);
+            ((IPageController)renderer.Element).ContainerArea = Context.CreateRect(rootLayout.MeasuredWidth, rootLayout.GetChildAt(0).MeasuredHeight);
 
             rootLayout.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
@@ -164,7 +169,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
         public static void SetupTabItems(this TabbedPage Element, BottomNavigationViewEx bottomNav)
         {
-            var menu = (BottomNavigationMenu) bottomNav.Menu;
+            var menu = (BottomNavigationMenu)bottomNav.Menu;
             menu.ClearAll();
 
             var tabsCount = Math.Min(Element.Children.Count, bottomNav.MaxItemCount);
@@ -238,7 +243,8 @@ namespace Naxam.Controls.Platform.Droid.Utils
             return bottomNav;
         }
 
-        public static void ChangePage(this BottomTabbedRenderer renderer, FrameLayout pageContainer, Page page) {
+        public static void ChangePage(this BottomTabbedRenderer renderer, FrameLayout pageContainer, Page page)
+        {
             renderer.Context.HideKeyboard(renderer);
 
             if (page == null)
@@ -256,9 +262,12 @@ namespace Naxam.Controls.Platform.Droid.Utils
             {
                 pageContainer.RemoveViewAt(0);
             }
+            
+            EnsureTabIndex(renderer);
         }
 
-        public static RelativeLayout CreateRoot(this BottomTabbedRenderer renderer, int barId, int pageContainerId, out FrameLayout pageContainer) {
+        public static RelativeLayout CreateRoot(this BottomTabbedRenderer renderer, int barId, int pageContainerId, out FrameLayout pageContainer)
+        {
             var rootLayout = new RelativeLayout(renderer.Context)
             {
                 LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent),
