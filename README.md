@@ -21,12 +21,12 @@ We could
 ## How to use
 
 ### Add XML namespace in your XAML
-```
+```xml
 xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
 ```
 
 ### Change the root element to BottomTabbedPage (change the code behind as well)
-```
+```xml
 <naxam:BottomTabbedPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -42,7 +42,7 @@ xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Form
 ```
 
 ### Change the colors/heights in your activity class
-```
+```c#
 BottomTabbedRenderer.BackgroundColor = new Android.Graphics.Color(23, 31, 50);
 BottomTabbedRenderer.FontSize = 10;
 BottomTabbedRenderer.IconSize = 20;
@@ -54,6 +54,23 @@ BottomTabbedRenderer.ItemSpacing = 8;
 BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(8);
 BottomTabbedRenderer.BottomBarHeight = 80;
 BottomTabbedRenderer.ItemAlign = BottomTabbedRenderer.ItemAlignFlags.Center;
+```
+
+### Use Iconize for menu item
+```c#
+BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource) => {
+    var iconized = Iconize.FindIconForKey(iconSource.File);
+    if (iconized == null)
+    {
+        BottomTabbedRenderer.DefaultMenuItemIconSetter.Invoke(menuItem, iconSource);
+
+        return;
+    }
+
+    var drawable = new IconDrawable(this, iconized).Color(Color.White).SizeDp(20);
+
+    menuItem.SetIcon(drawable);
+};
 ```
 
 ## Source Code
