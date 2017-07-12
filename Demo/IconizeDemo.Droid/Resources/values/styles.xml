@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
+	<color name="colorPrimary">#5DAC48</color>
 	<style name="MyTheme" parent="MyTheme.Base">
 	</style>
 	<!-- Base theme applied no matter what API -->
 	<style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:windowBackground">@drawable/bg_splash</item>
 		<!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
 		<item name="windowNoTitle">true</item>
 		<!--We will be using the toolbar so no need to show ActionBar-->

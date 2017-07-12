@@ -56,7 +56,7 @@ namespace Naxam.Demo
             });
 
             var random = new Random();
-            var icons = Plugin.Iconize.Iconize.Modules[0].Keys.Take(3);
+            var icons = Plugin.Iconize.Iconize.Modules.FirstOrDefault()?.Keys.Take(3) ?? new string[0];
             fPage.ToolbarItems.Add(new ToolbarItem
             {
                 Command = new Command((obj) =>

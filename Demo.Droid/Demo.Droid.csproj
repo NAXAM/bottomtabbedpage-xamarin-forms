@@ -134,6 +134,18 @@
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable\bnv_selector.xml" />
+    <AndroidResource Include="Resources\drawable\bg_splash.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-ldpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BottomTabbedPage.Droid\BottomTabbedPage.Platform.Droid.csproj">

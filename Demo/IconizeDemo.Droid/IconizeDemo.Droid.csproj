@@ -143,11 +143,24 @@
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
     <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\drawable\bg_splash.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\naxam_copyright.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-ldpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\" />
     <Folder Include="Renderers\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.csproj">
