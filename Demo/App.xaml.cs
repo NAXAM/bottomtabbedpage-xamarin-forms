@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Naxam.Controls.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +13,7 @@ namespace Naxam.Demo
         {
             InitializeComponent();
 
-            var page = new Naxam.Controls.Forms.BottomTabbedPage();
+            var page = new BottomTabbedPage();
             var fPage = new TestPage {
                 Title = "Test 1"
             };
@@ -54,6 +56,7 @@ namespace Naxam.Demo
             });
 
             var random = new Random();
+            var icons = Plugin.Iconize.Iconize.Modules[0].Keys.Take(3);
             fPage.ToolbarItems.Add(new ToolbarItem
             {
                 Command = new Command((obj) =>
@@ -83,7 +86,7 @@ namespace Naxam.Demo
             page.Children.Add(new NavigationPage(fPage)
             {
                 Title = "Test 1 Test 1 Test 1",
-                Icon = "icon.png"
+                Icon = icons.FirstOrDefault() ?? "icon.png"
             });
             page.Children.Add(new NavigationPage(
 			   new TestPage
@@ -92,7 +95,7 @@ namespace Naxam.Demo
 			   })
             {
                 Title = "Test 2 Test 2 Test 2",
-                Icon = "icon.png"
+                Icon = icons.Skip(1).FirstOrDefault() ?? "icon.png"
             });
             page.Children.Add(new TestPage(false)
             {

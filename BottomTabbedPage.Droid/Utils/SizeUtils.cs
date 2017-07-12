@@ -167,8 +167,9 @@ namespace Naxam.Controls.Platform.Droid.Utils
             }
         }
 
-        public static void SetupTabItems(this TabbedPage Element, BottomNavigationViewEx bottomNav)
+        public static void SetupTabItems(this BottomTabbedRenderer renderer, BottomNavigationViewEx bottomNav)
         {
+            var Element = renderer.Element;
             var menu = (BottomNavigationMenu)bottomNav.Menu;
             menu.ClearAll();
 
@@ -177,8 +178,8 @@ namespace Naxam.Controls.Platform.Droid.Utils
             {
                 var page = Element.Children[i];
                 var menuItem = menu.Add(0, i, 0, page.Title);
-                var tabIconId = ResourceManagerEx.IdFromTitle(page.Icon, ResourceManager.DrawableClass);
-                menuItem.SetIcon(tabIconId);
+                var setter = BottomTabbedRenderer.MenuItemIconSetter ?? BottomTabbedRenderer.DefaultMenuItemIconSetter;
+                setter.Invoke(menuItem, page.Icon);
             }
             if (Element.Children.Count > 0)
             {

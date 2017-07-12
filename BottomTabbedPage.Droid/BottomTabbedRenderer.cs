@@ -17,7 +17,14 @@ namespace Naxam.Controls.Platform.Droid
     using Platform = Xamarin.Forms.Platform.Android.Platform;
 
     public partial class BottomTabbedRenderer : VisualElementRenderer<BottomTabbedPage>
-    {
+	{
+        public static readonly Action<IMenuItem, FileImageSource> DefaultMenuItemIconSetter = (menuItem, icon) =>
+		{
+			var tabIconId = ResourceManagerEx.IdFromTitle(icon, ResourceManager.DrawableClass);
+			menuItem.SetIcon(tabIconId);
+		};
+
+		public static Action<IMenuItem, FileImageSource> MenuItemIconSetter;
         public static float? BottomBarHeight;
 
         RelativeLayout rootLayout;

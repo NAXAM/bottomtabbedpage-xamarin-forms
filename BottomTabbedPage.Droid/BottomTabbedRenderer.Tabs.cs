@@ -32,7 +32,7 @@ namespace Naxam.Controls.Platform.Droid
 
         internal void SetupTabItems()
         {
-            Element.SetupTabItems(bottomNav);
+            this.SetupTabItems(bottomNav);
         }
 
         internal void SetupBottomBar()

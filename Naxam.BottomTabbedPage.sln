@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Platform.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconizeDemo.Droid", "Demo\IconizeDemo.Droid\IconizeDemo.Droid.csproj", "{ED7EB8E6-2646-471A-A52A-DF93E30F0619}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}.Release|iPhone.Build.0 = Release|Any CPU
 		{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{60AA62D7-8C05-44B5-85EE-95DD36A6C43A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|iPhone.Build.0 = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +94,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DEFB4EE7-1350-4DDC-BE1C-2F6BBAD93527} = {27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}
 		{98E4BF61-0B7E-4F8F-A599-78235D272669} = {27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}
+		{ED7EB8E6-2646-471A-A52A-DF93E30F0619} = {27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}
 	EndGlobalSection
 EndGlobal
