@@ -20,6 +20,11 @@ We could
 
 ## How to use
 
+### Install NUGET package
+```
+Install-Package Naxam.BottomTabbedPage
+```
+
 ### Add XML namespace in your XAML
 ```xml
 xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
