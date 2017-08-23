@@ -13,97 +13,68 @@ namespace Naxam.Demo
         {
             InitializeComponent();
 
-            var page = new BottomTabbedPage();
-            var fPage = new TestPage {
-                Title = "Test 1"
-            };
-            fPage.ToolbarItems.Add(new ToolbarItem
-            {
-                Command = new Command((obj) =>
-                {
-                    //               var currentIndex = page.Children.IndexOf(page.CurrentPage);
+            var tabs = new BottomTabbedPage();
 
-                    //if (currentIndex == 0)
-                    //{
-                    //	return;
-                    //}
+            var icons = Plugin.Iconize.Iconize.Modules.FirstOrDefault()?.Keys.Take(5) ?? new string[0];
+			tabs.Children.Add(new ContentPage
+			{
+				Title = "Tab 1",
+                Icon = icons.FirstOrDefault() ?? "ic_audiotrack_black_24dp",
+				BackgroundColor = Color.Aqua,
+				Content = new Label
+				{
+					HorizontalTextAlignment = TextAlignment.Center,
+					VerticalTextAlignment = TextAlignment.Center,
+					Text = "BottomTabbedPage - A Xamarin.Forms page with tabs at the bottom.",
+					TextColor = Color.DarkCyan,
+					Margin = new Thickness(16)
+				}
+			});
+			tabs.Children.Add(new ContentPage
+			{
+				Title = "Tab 2",
+                Icon = icons.Skip(1).FirstOrDefault() ?? "ic_backup_black_24dp",
+				BackgroundColor = Color.Beige,
+				Content = new Label
+				{
+					HorizontalTextAlignment = TextAlignment.Center,
+					VerticalTextAlignment = TextAlignment.Center,
+					Text = "BottomTabbedPage internally uses BottomNavigationViewEx.",
+					TextColor = Color.Green,
+					Margin = new Thickness(16)
+				}
+			});
+			tabs.Children.Add(new ContentPage
+			{
+				Title = "Tab 3",
+				Icon = icons.Skip(2).FirstOrDefault() ?? "ic_camera_black_24dp",
+				BackgroundColor = Color.BlueViolet,
+				Content = new Label
+				{
+					HorizontalTextAlignment = TextAlignment.Center,
+					VerticalTextAlignment = TextAlignment.Center,
+					Text = "BottomTabbedPage could be embedded inside a NavigationPage.",
+					TextColor = Color.Aqua,
+					Margin = new Thickness(16)
+				}
+			});
 
-                    //var leftPage = page.Children[currentIndex - 1];
-                    //page.Children[currentIndex - 1] = page.CurrentPage;
-                    //page.Children[currentIndex] = leftPage;
+			tabs.Children.Add(new ContentPage
+			{
+				Title = "Tab 4",
+				Icon = icons.Skip(3).FirstOrDefault() ?? "ic_favorite_black_24dp",
+				BackgroundColor = Color.Bisque,
+				Content = new Label
+				{
+					HorizontalTextAlignment = TextAlignment.Center,
+					VerticalTextAlignment = TextAlignment.Center,
+					Text = "BottomTabbedPage is a product developed by NAXAM",
+					TextColor = Color.DarkGreen,
+					Margin = new Thickness(16)
+				}
+			});
 
-                    page.Children.Add(new NavigationPage(
-               new TestPage
-               {
-                   Title = "Test X1"
-               })
-                    {
-                        Title = "Test X1",
-                        Icon = "icon.png"
-                    });
-
-                    page.Children.Add(new NavigationPage(
-               new TestPage
-               {
-                   Title = "Test X2"
-               })
-                    {
-                        Title = "Test X2",
-                        Icon = "icon.png"
-                    });
-                }),
-                Text = "Add"
-            });
-
-            var random = new Random();
-            var icons = Plugin.Iconize.Iconize.Modules.FirstOrDefault()?.Keys.Take(3) ?? new string[0];
-            fPage.ToolbarItems.Add(new ToolbarItem
-            {
-                Command = new Command((obj) =>
-                {
-                    page.CurrentPage = page.Children[random.Next(page.Children.Count)];
-                }),
-                Text = "Change Current"
-            });
-            fPage.ToolbarItems.Add(new ToolbarItem
-            {
-                Command = new Command((obj) =>
-                {
-                    //               var currentIndex = page.Children.IndexOf(page.CurrentPage);
-
-                    //               if (currentIndex == page.Children.Count - 1) {
-                    //                   return;
-                    //               }
-
-                    //var nextPage = page.Children[currentIndex + 1];
-                    //page.Children[currentIndex + 1] = page.CurrentPage;
-                    //               page.Children[currentIndex] = nextPage;
-                    page.Children.Remove(page.CurrentPage);
-                }),
-                Text = "Remove"
-            });
-
-            page.Children.Add(new NavigationPage(fPage)
-            {
-                Title = "Test 1 Test 1 Test 1",
-                Icon = icons.FirstOrDefault() ?? "icon.png"
-            });
-            page.Children.Add(new NavigationPage(
-			   new TestPage
-			   {
-				   Title = "Test 2"
-			   })
-            {
-                Title = "Test 2 Test 2 Test 2",
-                Icon = icons.Skip(1).FirstOrDefault() ?? "icon.png"
-            });
-            page.Children.Add(new TestPage(false)
-            {
-                Title = "Test 3",
-                Icon = "icon.png"
-            });
-
-            MainPage = page;
+            MainPage = tabs;
         }
 
         protected override void OnStart()

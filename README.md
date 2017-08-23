@@ -1,7 +1,27 @@
-# Overview
+<img src="./art/repo_header.png" alt="TopTabbedPage - A Xamarin.Forms control" width="728" />
 
-BottomNavigationView is a new control since Android Support Design v25.
-This source code demonstrate the way to bring it into Xamarin.Forms.
+# BottomTabbedPage
+A Xamarin.Forms control brings BottomNavigationView for bottom navigation on Android
+
+|![Tab 1](./art/tab1.png)|![Tab 5](./art/tab5.png)|
+|:---:|:---:|
+
+## About
+This project is maintained by Naxam Co.,Ltd.<br>
+We specialize in developing mobile applications using Xamarin and native technology stack.<br>
+
+**Looking for developers for your project?**<br>
+
+<a href="mailto:tuyen@naxam.net"> 
+<img src="https://github.com/NAXAM/naxam.github.io/blob/master/assets/img/hire_button.png?raw=true" height="36"></a> <br>
+
+## Installation
+```
+Install-Package Naxam.TopTabbedPage.Forms
+```
+
+## What's inside
+BottomNavigationView is a new control since Android Support Design v25. This source code demonstrate the way to bring it into Xamarin.Forms.
 
 However, BottomNavigationView is very limited from customizing, we have to employ library BottomNavigationViewEx as a patch.
 
@@ -76,3 +96,11 @@ BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource) => {
 ## Source Code
 - Naxam.BottomNavs.Platform.Droid/*.cs
 - Naxam.BottomNavs.Forms/BottomTabbedPage.cs
+
+## Credits
+This library currently uses `BottomNavigationViewEx` from @ittianyu [BottomNavigationViewEx](https://github.com/ittianyu/BottomNavigationViewEx) library.
+
+## License
+
+BottmTabbedPage is released under the Apache License license.
+See [LICENSE](./LICENSE) for details.

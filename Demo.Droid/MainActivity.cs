@@ -26,29 +26,34 @@ namespace Naxam.Demo.Droid
 
         void SetupBottomTabs()
         {
-            var stateList = new Android.Content.Res.ColorStateList(
-                new int[][] {
-                    new int[] { Android.Resource.Attribute.StateChecked
-                },
-                new int[] { Android.Resource.Attribute.StateEnabled
-                }
-                },
-                new int[] {
-                    new Color(67, 163, 245), //Selected
-                    new Color(187, 188, 190) //Normal
-	            });
+			var stateList = new Android.Content.Res.ColorStateList(
+				new int[][] {
+					new int[] { Android.Resource.Attribute.StateChecked
+				},
+				new int[] { Android.Resource.Attribute.StateEnabled
+				}
+				},
+				new int[] {
+					Color.White, //Selected
+                    Color.White //Normal
+                });
 
-            BottomTabbedRenderer.BackgroundColor = new Color(23, 31, 50);
-            BottomTabbedRenderer.FontSize = 12.5f;
-            BottomTabbedRenderer.IconSize = 16;
-            BottomTabbedRenderer.ItemTextColor = stateList;
-            BottomTabbedRenderer.ItemIconTintList = stateList;
-            BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "architep.ttf");
-            BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
-            BottomTabbedRenderer.ItemSpacing = 24;
-            BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(12);
-            BottomTabbedRenderer.BottomBarHeight = 160;
-            BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Top;
+			BottomTabbedRenderer.BackgroundColor = new Color(0x9C, 0x27, 0xB0);
+			BottomTabbedRenderer.FontSize = 12f;
+			BottomTabbedRenderer.IconSize = 16;
+			BottomTabbedRenderer.ItemTextColor = stateList;
+			BottomTabbedRenderer.ItemIconTintList = stateList;
+			BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "architep.ttf");
+			BottomTabbedRenderer.ItemBackgroundResource = Resource.Drawable.bnv_selector;
+			BottomTabbedRenderer.ItemSpacing = 4;
+			//BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(6);
+			BottomTabbedRenderer.BottomBarHeight = 56;
+			BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Center;
+			BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource) => {
+                var resId = Resources.GetIdentifier(iconSource.File, "drawable", PackageName);
+
+                menuItem.SetIcon(resId);
+			};
         }
     }
 }
