@@ -15,11 +15,6 @@ We specialize in developing mobile applications using Xamarin and native technol
 <a href="mailto:tuyen@naxam.net"> 
 <img src="https://github.com/NAXAM/naxam.github.io/blob/master/assets/img/hire_button.png?raw=true" height="36"></a> <br>
 
-## Installation
-```
-Install-Package Naxam.TopTabbedPage.Forms
-```
-
 ## What's inside
 BottomNavigationView is a new control since Android Support Design v25. This source code demonstrate the way to bring it into Xamarin.Forms.
 
@@ -39,6 +34,11 @@ We could
 - BottomNavigationViewEx [nuget](https://www.nuget.org/packages/Naxam.Ittianyu.BottomNavExtension/)
 
 ## How to use
+
+### Install NUGET package
+```
+Install-Package Naxam.BottomTabbedPage
+```
 
 ### Add XML namespace in your XAML
 ```xml
