@@ -18,14 +18,15 @@ namespace Naxam.Controls.Platform.Droid
 
     public partial class BottomTabbedRenderer : VisualElementRenderer<BottomTabbedPage>
 	{
-        public static readonly Action<IMenuItem, FileImageSource> DefaultMenuItemIconSetter = (menuItem, icon) =>
+        public static readonly Action<IMenuItem, FileImageSource, bool> DefaultMenuItemIconSetter = (menuItem, icon, selected) =>
 		{
 			var tabIconId = ResourceManagerEx.IdFromTitle(icon, ResourceManager.DrawableClass);
 			menuItem.SetIcon(tabIconId);
 		};
 
-		public static Action<IMenuItem, FileImageSource> MenuItemIconSetter;
-        public static float? BottomBarHeight;
+		public static bool ShouldUpdateSelectedIcon;
+		public static Action<IMenuItem, FileImageSource, bool> MenuItemIconSetter;
+		public static float? BottomBarHeight;
 
         RelativeLayout rootLayout;
         FrameLayout pageContainer;
@@ -33,6 +34,8 @@ namespace Naxam.Controls.Platform.Droid
         readonly int barId;
 
         IPageController TabbedController => Element as IPageController;
+
+        public int LastSelectedIndex { get; internal set; }
 
         public BottomTabbedRenderer()
         {

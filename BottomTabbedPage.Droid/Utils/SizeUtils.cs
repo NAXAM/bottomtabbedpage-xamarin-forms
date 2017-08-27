@@ -46,7 +46,20 @@ namespace Naxam.Controls.Platform.Droid.Utils
             var pageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
             if (pageIndex >= 0 && pageIndex != itemIndex && pageIndex < bottomNav.ItemCount)
             {
-                bottomNav.SelectedItemId = menu.GetItem(pageIndex).ItemId;
+                var menuItem = menu.GetItem(pageIndex);
+                bottomNav.SelectedItemId = menuItem.ItemId;
+                renderer.LastSelectedIndex = pageIndex;
+
+                if (BottomTabbedRenderer.ShouldUpdateSelectedIcon && BottomTabbedRenderer.MenuItemIconSetter != null)
+                {
+                    BottomTabbedRenderer.MenuItemIconSetter?.Invoke(menuItem, renderer.Element.CurrentPage.Icon, true);
+
+                    if (renderer.LastSelectedIndex != pageIndex) {
+                        var lastSelectedPage = renderer.Element.Children[renderer.LastSelectedIndex];
+                        var lastSelectedMenuItem = menu.GetItem(renderer.LastSelectedIndex);
+                        BottomTabbedRenderer.MenuItemIconSetter?.Invoke(lastSelectedMenuItem, lastSelectedPage.Icon, false);
+                    }
+                }
             }
         }
 
@@ -179,7 +192,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 var page = Element.Children[i];
                 var menuItem = menu.Add(0, i, 0, page.Title);
                 var setter = BottomTabbedRenderer.MenuItemIconSetter ?? BottomTabbedRenderer.DefaultMenuItemIconSetter;
-                setter.Invoke(menuItem, page.Icon);
+                setter.Invoke(menuItem, page.Icon, renderer.LastSelectedIndex == i);
             }
             if (Element.Children.Count > 0)
             {
@@ -263,7 +276,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
             {
                 pageContainer.RemoveViewAt(0);
             }
-            
+
             EnsureTabIndex(renderer);
         }
 

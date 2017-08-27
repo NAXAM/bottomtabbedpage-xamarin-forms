@@ -56,11 +56,11 @@ namespace Naxam.IconizeDemo.Droid
             //BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(6);
             BottomTabbedRenderer.BottomBarHeight = 56;
             BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Center;
-            BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource) => {
+            BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource, selected) => {
 				var iconized = Iconize.FindIconForKey(iconSource.File);
 				if (iconized == null)
 				{
-                    BottomTabbedRenderer.DefaultMenuItemIconSetter.Invoke(menuItem, iconSource);
+                    BottomTabbedRenderer.DefaultMenuItemIconSetter.Invoke(menuItem, iconSource, selected);
 
 					return;
 				}

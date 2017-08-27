@@ -34,7 +34,7 @@ namespace Naxam.Demo.Droid
 				}
 				},
 				new int[] {
-					Color.White, //Selected
+                    Color.DarkRed, //Selected
                     Color.White //Normal
                 });
 
@@ -49,7 +49,7 @@ namespace Naxam.Demo.Droid
 			//BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(6);
 			BottomTabbedRenderer.BottomBarHeight = 56;
 			BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Center;
-			BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource) => {
+			BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource, selected) => {
                 var resId = Resources.GetIdentifier(iconSource.File, "drawable", PackageName);
 
                 menuItem.SetIcon(resId);
