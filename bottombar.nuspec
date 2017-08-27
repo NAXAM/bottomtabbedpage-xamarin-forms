@@ -3,15 +3,14 @@
     <metadata>
         <!-- Required elements-->
         <id>Naxam.BottomTabbedPage</id>
-        <version>0.1.0</version>
+        <version>0.1.0.1</version>
         <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
         <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
         <owners>NAXAM CO.,LTD</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <title>Naxam - BottomTabbedPage</title>
         <releaseNotes>
-            - Breaking changes: Change MenuIconSetter to have three parameters.
-            - Set ShouldUpdateSelectedIcon to true to update icon color when page is selected;
+            - Fix: Not update selected icon color appropriately
         </releaseNotes>
         <summary>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</summary>
         <projectUrl>https://naxam.net</projectUrl>

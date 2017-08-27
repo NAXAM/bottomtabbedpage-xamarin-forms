@@ -41,7 +41,7 @@ namespace Naxam.IconizeDemo.Droid
                 }
                 },
                 new int[] {
-                    Color.White, //Selected
+                    Color.Red, //Selected
                     Color.White //Normal
 	            });
 
@@ -56,6 +56,7 @@ namespace Naxam.IconizeDemo.Droid
             //BottomTabbedRenderer.ItemPadding = new Xamarin.Forms.Thickness(6);
             BottomTabbedRenderer.BottomBarHeight = 56;
             BottomTabbedRenderer.ItemAlign = ItemAlignFlags.Center;
+            BottomTabbedRenderer.ShouldUpdateSelectedIcon = true;
             BottomTabbedRenderer.MenuItemIconSetter = (menuItem, iconSource, selected) => {
 				var iconized = Iconize.FindIconForKey(iconSource.File);
 				if (iconized == null)
@@ -65,7 +66,7 @@ namespace Naxam.IconizeDemo.Droid
 					return;
 				}
 
-                var drawable = new IconDrawable(this, iconized).Color(Color.White).SizeDp(30);
+                var drawable = new IconDrawable(this, iconized).Color(selected ? Color.Red : Color.White).SizeDp(30);
 
 				menuItem.SetIcon(drawable);
             };
