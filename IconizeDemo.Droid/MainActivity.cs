@@ -4,9 +4,9 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Naxam.Controls.Platform.Droid;
-using Naxam.Demo;
 using Plugin.Iconize;
 using Plugin.Iconize.Droid.Controls;
+using Naxam.Demo;
 
 namespace Naxam.IconizeDemo.Droid
 {
