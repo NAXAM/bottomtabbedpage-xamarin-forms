@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProjectGuid>{DEFB4EE7-1350-4DDC-BE1C-2F6BBAD93527}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BottomTabbedPage\BottomTabbedPage.Forms.csproj">
+      <Project>{b3f20a5f-fb43-4825-bd57-e1b7976020f8}</Project>
+      <Name>BottomTabbedPage.Forms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xam.Plugin.Iconize" Version="1.0.10" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+  </ItemGroup>
+</Project>

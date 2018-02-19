@@ -4,8 +4,9 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Naxam.Controls.Platform.Droid;
+using Naxam.Demo;
 
-namespace Naxam.Demo.Droid
+namespace BottomTabbedPageQs.Droid
 {
     [Activity(Label = "BottomTabbedQs", Icon = "@mipmap/ic_launcher", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity

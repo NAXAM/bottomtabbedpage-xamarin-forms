@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{DEFB4EE7-1350-4DDC-BE1C-2F6BBAD93527}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPageQs", "demo\BottomTabbedPageQs\BottomTabbedPageQs.csproj", "{DEFB4EE7-1350-4DDC-BE1C-2F6BBAD93527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Droid", "Demo.Droid\Demo.Droid.csproj", "{98E4BF61-0B7E-4F8F-A599-78235D272669}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPageQs.Droid", "demo\BottomTabbedPageQs.Droid\BottomTabbedPageQs.Droid.csproj", "{98E4BF61-0B7E-4F8F-A599-78235D272669}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Forms", "BottomTabbedPage\BottomTabbedPage.Forms.csproj", "{B3F20A5F-FB43-4825-BD57-E1B7976020F8}"
 EndProject
@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomTabbedPage.Platform.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{27C2731C-B6B4-4015-8DD5-F795AC5B1AE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconizeDemo.Droid", "Demo\IconizeDemo.Droid\IconizeDemo.Droid.csproj", "{ED7EB8E6-2646-471A-A52A-DF93E30F0619}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconizeDemo.Droid", "demo\IconizeDemo.Droid\IconizeDemo.Droid.csproj", "{ED7EB8E6-2646-471A-A52A-DF93E30F0619}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
