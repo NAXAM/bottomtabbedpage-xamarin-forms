@@ -53,12 +53,17 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 {
                     BottomTabbedRenderer.MenuItemIconSetter?.Invoke(menuItem, renderer.Element.CurrentPage.Icon, true);
 
-                    if (renderer.LastSelectedIndex != pageIndex) {
+                    if (renderer.LastSelectedIndex != pageIndex)
+                    {
                         var lastSelectedPage = renderer.Element.Children[renderer.LastSelectedIndex];
                         var lastSelectedMenuItem = menu.GetItem(renderer.LastSelectedIndex);
                         BottomTabbedRenderer.MenuItemIconSetter?.Invoke(lastSelectedMenuItem, lastSelectedPage.Icon, false);
                         renderer.LastSelectedIndex = pageIndex;
                     }
+                }
+                else if (renderer.LastSelectedIndex != pageIndex)
+                {
+                    renderer.LastSelectedIndex = pageIndex;
                 }
             }
         }
