@@ -42,7 +42,7 @@ Install-Package Naxam.BottomTabbedPage
 
 ### Add XML namespace in your XAML
 ```xml
-xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
+xmlns:naxam="clr-namespace:Naxam.Controls.Forms;assembly=Naxam.Controls.Forms"
 ```
 
 ### Change the root element to BottomTabbedPage (change the code behind as well)
@@ -51,7 +51,7 @@ xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Form
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Demo"
-    xmlns:naxam="clr-namespace:Naxam.BottomNavs.Forms;assembly=Naxam.BottomNavs.Forms"
+    xmlns:naxam="clr-namespace:Naxam.Controls.Forms;assembly=Naxam.Controls.Forms"
     x:Class="Demo.MainPage">
     <local:Page1 />
     <local:Page2 />
