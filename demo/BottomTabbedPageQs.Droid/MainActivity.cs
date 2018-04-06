@@ -38,10 +38,10 @@ namespace BottomTabbedPageQs.Droid
                     Color.DarkRed, //Selected
                     Color.White //Normal
                 });
-
-			BottomTabbedRenderer.BackgroundColor = new Color(0x9C, 0x27, 0xB0);
+            BottomTabbedRenderer.VisibleTitle = false;
+            BottomTabbedRenderer.BackgroundColor = new Color(0x9C, 0x27, 0xB0);
 			BottomTabbedRenderer.FontSize = 12f;
-			BottomTabbedRenderer.IconSize = 16;
+			BottomTabbedRenderer.IconSize = 24;
 			BottomTabbedRenderer.ItemTextColor = stateList;
 			BottomTabbedRenderer.ItemIconTintList = stateList;
 			BottomTabbedRenderer.Typeface = Typeface.CreateFromAsset(this.Assets, "architep.ttf");

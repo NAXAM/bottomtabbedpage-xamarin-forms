@@ -23,7 +23,9 @@ namespace Naxam.Controls.Platform.Droid
         public static float ItemSpacing;
         public static ItemAlignFlags ItemAlign;
         public static Thickness ItemPadding;
-        
+        public static bool? VisibleTitle;
+
+
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             this.SwitchPage(item);

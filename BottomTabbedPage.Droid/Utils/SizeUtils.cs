@@ -126,8 +126,36 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
                 var imgView = bottomNav.GetIconAt(i);
                 var baselayout = frame.GetChildAt(1);
+                if (BottomTabbedRenderer.VisibleTitle == false)
+                {
+                    baselayout.Visibility = ViewStates.Gone;
+                    //Icon Height
+                    int imgH = imgView.LayoutParameters.Height;
+                    //Icon Width
+                    int imgW = Math.Min(imgView.LayoutParameters.Width, item_w - (int)Context.ToPixels(BottomTabbedRenderer.ItemPadding.Left) - (int)Context.ToPixels(BottomTabbedRenderer.ItemPadding.Right));
+
+                    int imgTop = (tabsHeight - imgH - (int)Context.ToPixels(BottomTabbedRenderer.ItemSpacing)) / 2;
+                    int imgLeft = (item_w - imgW) / 2;
+
+                    switch (BottomTabbedRenderer.ItemAlign)
+                    {
+                        case ItemAlignFlags.Default:
+                        case ItemAlignFlags.Top:
+                            imgTop = (int)Context.ToPixels(BottomTabbedRenderer.ItemPadding.Top);
+                            break;
+                        case ItemAlignFlags.Bottom:
+                            imgTop = tabsHeight - imgH - (int)Context.ToPixels(BottomTabbedRenderer.ItemPadding.Bottom);
+                            break;
+                    }
+                    //layout icon
+                    imgView.Measure(MeasureSpecFactory.MakeMeasureSpec(imgW, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec(imgH, MeasureSpecMode.Exactly));
+                    imgView.Layout(imgLeft, imgTop, imgW + imgLeft, imgH + imgTop);
+                    continue;
+                }
+
                 if (baselayout != null)
                 {
+                    baselayout.Visibility = ViewStates.Visible;
                     if (baselayout.GetType() == typeof(BaselineLayout))
                     {
                         //Container text
@@ -204,7 +232,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 bottomNav.EnableShiftingMode(false);//remove shifting mode
                 bottomNav.EnableItemShiftingMode(false);//remove shifting mode
                 bottomNav.EnableAnimation(false);//remove animation
-
+                bottomNav.SetTextVisibility(BottomTabbedRenderer.VisibleTitle.HasValue ? BottomTabbedRenderer.VisibleTitle.Value : true);
                 if (BottomTabbedRenderer.Typeface != null)
                 {
                     bottomNav.SetTypeface(BottomTabbedRenderer.Typeface);
