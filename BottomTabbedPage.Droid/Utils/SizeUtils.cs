@@ -80,7 +80,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
             if (pageIndex == currentPageIndex)
             {
-                renderer.Element.Children[currentPageIndex].Navigation.PopToRootAsync();
+                renderer.Element.Children[currentPageIndex].Navigation?.PopToRootAsync();
             }
             else
             {
