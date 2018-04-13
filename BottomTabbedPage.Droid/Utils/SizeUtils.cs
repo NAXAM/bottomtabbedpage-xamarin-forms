@@ -78,10 +78,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
             var pageIndex = index % renderer.Element.Children.Count;
             var currentPageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
 
-            if (currentPageIndex != pageIndex)
-            {
-                renderer.Element.CurrentPage = renderer.Element.Children[pageIndex];
-            }
+            renderer.Element.CurrentPage = renderer.Element.Children[pageIndex];
         }
 
         public static void Layout(this BottomTabbedRenderer renderer, int width, int height)
