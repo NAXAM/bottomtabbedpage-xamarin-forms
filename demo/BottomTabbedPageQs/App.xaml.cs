@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BottomTabbedPageQs;
 using Naxam.Controls.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,6 +10,7 @@ namespace Naxam.Demo
 {
     public partial class App : Application
     {
+
         public App()
         {
             InitializeComponent();
@@ -58,20 +60,29 @@ namespace Naxam.Demo
 					Margin = new Thickness(16)
 				}
 			});
-
-			tabs.Children.Add(new ContentPage
+            var stackLayout = new StackLayout();
+            stackLayout.Children.Add(new Label
+            {
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center,
+                Text = "BottomTabbedPage is a product developed by NAXAM",
+                TextColor = Color.DarkGreen,
+                Margin = new Thickness(16)
+            });
+            stackLayout.Children.Add(new Button
+            {
+                Text = "退出",
+                Command = new Command(()=> {
+                    MainPage = new NavigationPage(new MainPage());
+                })
+            });
+            tabs.Children.Add(new ContentPage
 			{
 				Title = "Tab 4",
 				Icon = icons.Skip(3).FirstOrDefault() ?? "ic_favorite_black_24dp",
 				BackgroundColor = Color.Bisque,
-				Content = new Label
-				{
-					HorizontalTextAlignment = TextAlignment.Center,
-					VerticalTextAlignment = TextAlignment.Center,
-					Text = "BottomTabbedPage is a product developed by NAXAM",
-					TextColor = Color.DarkGreen,
-					Margin = new Thickness(16)
-				}
+				Content = stackLayout
+                
 			});
 
             MainPage = tabs;
