@@ -18,5 +18,9 @@ namespace DemoTest
         {
             App.Current.MainPage = new NavigationPage(new MainTabbedPage());
         }
+        private void Button2_Clicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new NavigationPage(new MyTabbedPage());
+        }
     }
 }

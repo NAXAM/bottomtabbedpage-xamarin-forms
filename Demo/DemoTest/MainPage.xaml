@@ -9,7 +9,8 @@
         <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="Center" 
                 HorizontalOptions="CenterAndExpand" />
-        <Button Text="GoMain" Clicked="Button_Clicked"/>
+        <Button Text="GoMainTabbedPage" Clicked="Button_Clicked"/>
+        <Button Text="GoMyTabbedPage" Clicked="Button2_Clicked"/>
     </StackLayout>
 
 </ContentPage>
