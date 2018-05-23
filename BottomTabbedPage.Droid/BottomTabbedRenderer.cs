@@ -119,7 +119,7 @@ namespace Naxam.Controls.Platform.Droid
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && Element != null)
             {
 				Element.ChildAdded -= PagesChanged;
 				Element.ChildRemoved -= PagesChanged;
