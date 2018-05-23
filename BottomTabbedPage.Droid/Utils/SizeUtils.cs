@@ -78,7 +78,11 @@ namespace Naxam.Controls.Platform.Droid.Utils
             var pageIndex = index % renderer.Element.Children.Count;
             var currentPageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
 
-            if (currentPageIndex != pageIndex)
+            if (pageIndex == currentPageIndex)
+            {
+                renderer.Element.Children[currentPageIndex].Navigation?.PopToRootAsync();
+            }
+            else
             {
                 renderer.Element.CurrentPage = renderer.Element.Children[pageIndex];
             }
