@@ -3,14 +3,16 @@
     <metadata>
         <!-- Required elements-->
         <id>Naxam.BottomTabbedPage</id>
-        <version>0.2.0.2</version>
+        <version>0.2.0.3</version>
         <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
         <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
         <owners>NAXAM CO.,LTD</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <title>Naxam - BottomTabbedPage</title>
         <releaseNotes>
-            Enable to set Visibility Title 
+            Fix issues:
+            - NullPointerException when disposing
+            - Navigate to root view if tab is a navigation page and touch the tab again.
         </releaseNotes>
         <summary>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</summary>
         <iconUrl>https://avatars1.githubusercontent.com/u/25535951</iconUrl>
