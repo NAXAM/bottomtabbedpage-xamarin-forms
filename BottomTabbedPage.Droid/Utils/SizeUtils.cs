@@ -78,9 +78,9 @@ namespace Naxam.Controls.Platform.Droid.Utils
             var pageIndex = index % renderer.Element.Children.Count;
             var currentPageIndex = renderer.Element.Children.IndexOf(renderer.Element.CurrentPage);
 
-            if (pageIndex == currentPageIndex)
+            if (pageIndex == currentPageIndex && renderer.Element.CurrentPage is NavigationPage nav)
             {
-                renderer.Element.Children[currentPageIndex].Navigation?.PopToRootAsync();
+                nav.Navigation.PopToRootAsync();
             }
             else
             {
@@ -114,11 +114,20 @@ namespace Naxam.Controls.Platform.Droid.Utils
             int tabsHeight = bottomNav.MeasuredHeight;
 
             var item = (ViewGroup)bottomNav.GetChildAt(0);
+
             item.Measure(
                 MeasureSpecFactory.MakeMeasureSpec(width, MeasureSpecMode.Exactly),
                 MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.Exactly));
 
             item.Layout(0, 0, width, tabsHeight);
+
+            if (item.ChildCount == 0)
+            {
+                SetupTabItems(renderer, bottomNav);
+
+                return;
+            }
+
             int item_w = width / item.ChildCount;
             for (int i = 0; i < item.ChildCount; i++)
             {
@@ -222,7 +231,35 @@ namespace Naxam.Controls.Platform.Droid.Utils
             var Element = renderer.Element;
             var menu = (BottomNavigationMenu)bottomNav.Menu;
             menu.ClearAll();
+            var mPresenterField = Java.Lang.Class.FromType(typeof(BottomNavigationMenuView)).GetDeclaredField("presenter");
+            mPresenterField.Accessible = true;
+            var mPresenter = (BottomNavigationPresenter) mPresenterField.Get(bottomNav.BottomNavigationMenuView);
+            mPresenterField.Accessible = false;
 
+            if (Element.Children.Count == 0)
+            {
+                return;
+            }
+
+            bottomNav.EnableShiftingMode(false);//remove shifting mode
+            bottomNav.EnableItemShiftingMode(false);//remove shifting mode
+            bottomNav.EnableAnimation(false);//remove animation
+            bottomNav.SetTextVisibility(BottomTabbedRenderer.VisibleTitle.HasValue ? BottomTabbedRenderer.VisibleTitle.Value : true);
+            if (BottomTabbedRenderer.Typeface != null)
+            {
+                bottomNav.SetTypeface(BottomTabbedRenderer.Typeface);
+            }
+            if (BottomTabbedRenderer.IconSize.HasValue)
+            {
+                bottomNav.SetIconSize(BottomTabbedRenderer.IconSize.Value, BottomTabbedRenderer.IconSize.Value);
+            }
+            if (BottomTabbedRenderer.FontSize.HasValue)
+            {
+                bottomNav.SetTextSize(BottomTabbedRenderer.FontSize.Value);
+            }
+
+            bottomNav.TextAlignment = Android.Views.TextAlignment.Center;
+            mPresenter.SetUpdateSuspended(true);
             var tabsCount = Math.Min(Element.Children.Count, bottomNav.MaxItemCount);
             for (int i = 0; i < tabsCount; i++)
             {
@@ -231,27 +268,8 @@ namespace Naxam.Controls.Platform.Droid.Utils
                 var setter = BottomTabbedRenderer.MenuItemIconSetter ?? BottomTabbedRenderer.DefaultMenuItemIconSetter;
                 setter.Invoke(menuItem, page.Icon, renderer.LastSelectedIndex == i);
             }
-            if (Element.Children.Count > 0)
-            {
-                bottomNav.EnableShiftingMode(false);//remove shifting mode
-                bottomNav.EnableItemShiftingMode(false);//remove shifting mode
-                bottomNav.EnableAnimation(false);//remove animation
-                bottomNav.SetTextVisibility(BottomTabbedRenderer.VisibleTitle.HasValue ? BottomTabbedRenderer.VisibleTitle.Value : true);
-                if (BottomTabbedRenderer.Typeface != null)
-                {
-                    bottomNav.SetTypeface(BottomTabbedRenderer.Typeface);
-                }
-                if (BottomTabbedRenderer.IconSize.HasValue)
-                {
-                    bottomNav.SetIconSize(BottomTabbedRenderer.IconSize.Value, BottomTabbedRenderer.IconSize.Value);
-                }
-                if (BottomTabbedRenderer.FontSize.HasValue)
-                {
-                    bottomNav.SetTextSize(BottomTabbedRenderer.FontSize.Value);
-                }
-
-                bottomNav.TextAlignment = Android.Views.TextAlignment.Center;
-            }
+            mPresenter.SetUpdateSuspended(false);
+            mPresenter.UpdateMenuView(true);
         }
 
         public static BottomNavigationViewEx SetupBottomBar(this BottomTabbedRenderer renderer, Android.Widget.RelativeLayout rootLayout, BottomNavigationViewEx bottomNav, int barId)

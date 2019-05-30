@@ -3,16 +3,14 @@
     <metadata>
         <!-- Required elements-->
         <id>Naxam.BottomTabbedPage</id>
-        <version>0.2.0.3</version>
+        <version>0.3.0.0</version>
         <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
         <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
         <owners>NAXAM CO.,LTD</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <title>Naxam - BottomTabbedPage</title>
         <releaseNotes>
-            Fix issues:
-            - NullPointerException when disposing
-            - Navigate to root view if tab is a navigation page and touch the tab again.
+            Upgrade to Android.Support v28
         </releaseNotes>
         <summary>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</summary>
         <iconUrl>https://avatars1.githubusercontent.com/u/25535951</iconUrl>
@@ -25,7 +23,7 @@
             </group>
 
             <group targetFramework="MonoAndroid10">
-                <dependency id="Naxam.Ittianyu.BottomNavExtension" version="1.2.4" />
+                <dependency id="Naxam.Ittianyu.BottomNavExtension" version="2.0.4" />
             </group>
         </dependencies>
     </metadata>
