@@ -25,6 +25,7 @@ namespace Naxam.Controls.Platform.Droid
         public static Thickness ItemPadding;
         public static bool? VisibleTitle;
 
+        internal int CurrentMenuItemId = 0;
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
