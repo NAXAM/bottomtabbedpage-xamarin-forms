@@ -10,7 +10,7 @@
     <AssemblyProduct>XControls</AssemblyProduct>
     <AssemblyCopyright>Copyright (c) 2017-present NAXAM</AssemblyCopyright>
     <AssemblyTrademark>NAXAM</AssemblyTrademark>
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.1</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Controls" />

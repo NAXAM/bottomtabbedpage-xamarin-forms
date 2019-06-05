@@ -3,7 +3,7 @@
     <metadata>
         <!-- Required elements-->
         <id>Naxam.BottomTabbedPage</id>
-        <version>0.3.0.0</version>
+        <version>0.3.0.1-pre1</version>
         <description>A library for Xamarin.Forms where BottomNavigationView is used instead of TabLayout.</description>
         <authors>Vu Duc Tuyen, Do Thanh Binh</authors>
         <owners>NAXAM CO.,LTD</owners>
