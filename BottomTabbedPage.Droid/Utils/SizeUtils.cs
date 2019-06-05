@@ -131,7 +131,7 @@ namespace Naxam.Controls.Platform.Droid.Utils
         {
             var Element = renderer.Element;
             var menu = (BottomNavigationMenu)bottomNav.Menu;
-            menu.ClearAll();
+            menu.Clear();
             var mPresenterField = Java.Lang.Class.FromType(typeof(BottomNavigationMenuView)).GetDeclaredField("presenter");
             mPresenterField.Accessible = true;
             var mPresenter = (BottomNavigationPresenter)mPresenterField.Get(bottomNav.BottomNavigationMenuView);
