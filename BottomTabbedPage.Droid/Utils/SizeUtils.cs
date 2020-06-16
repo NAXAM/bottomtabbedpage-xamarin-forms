@@ -124,7 +124,22 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
             item.Layout(0, 0, width, tabsHeight);
 
-            return;
+
+            var menuItems = bottomNav.GetBottomNavigationItemViews();
+            var count = menuItems.Length;
+            if (count == 0)
+            {
+                return;
+            }
+            var itemWidth = width / count;
+            for (int i = 0; i < count; i++)
+            {
+                var menu = menuItems[i];
+                menu.Measure(
+                    MeasureSpecFactory.MakeMeasureSpec(itemWidth, MeasureSpecMode.Exactly),
+                    MeasureSpecFactory.MakeMeasureSpec(tabsHeight, MeasureSpecMode.Exactly));
+                menu.Layout(i * itemWidth, 0, itemWidth*(i+1), tabsHeight);
+            }
         }
 
         public static void SetupTabItems(this BottomTabbedRenderer renderer, BottomNavigationViewEx bottomNav)
@@ -225,9 +240,9 @@ namespace Naxam.Controls.Platform.Droid.Utils
 
             if (Platform.GetRenderer(page) == null)
             {
-                Platform.SetRenderer(page, Platform.CreateRenderer(page));
+                Platform.SetRenderer(page, Platform.CreateRendererWithContext(page, renderer.Context));
             }
-            var pageContent = Platform.GetRenderer(page).ViewGroup;
+            var pageContent = Platform.GetRenderer(page).View;
             pageContainer.AddView(pageContent);
             if (pageContainer.ChildCount > 1)
             {
